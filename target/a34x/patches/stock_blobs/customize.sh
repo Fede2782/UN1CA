@@ -97,11 +97,6 @@ echo "Add stock vintf manifest"
 ADD_TO_WORK_DIR "system" "system/etc/vintf/compatibility_matrix.device.xml" 0 0 644 "u:object_r:system_file:s0"
 ADD_TO_WORK_DIR "system" "system/etc/vintf/manifest.xml" 0 0 644 "u:object_r:system_file:s0"
 
-echo "Add MTK SurfaceFlinger extensions"
-ADD_TO_WORK_DIR "system" "system/etc/vintf/manifest/mtksf_ext-mtk-default.xml" 0 0 644 "u:object_r:system_file:s0"
-ADD_TO_WORK_DIR "system_ext" "lib64/vendor.mediatek.framework.mtksf_ext-V3-ndk.so" 0 0 644 "u:object_r:system_file:s0"
-echo "vendor.mediatek.framework.mtksf_ext.IMtkSF_ext/default     u:object_r:mtk_hal_sf_service:s0" >> "$WORK_DIR/system_ext/etc/selinux/system_ext_service_contexts"
-
 REMOVE_FROM_WORK_DIR "$WORK_DIR/system/system/etc/permissions/com.sec.feature.cover.flip.xml"
 REMOVE_FROM_WORK_DIR "$WORK_DIR/system/system/etc/permissions/com.sec.feature.pocketmode_level33.xml"
 REMOVE_FROM_WORK_DIR "$WORK_DIR/system/system/etc/permissions/com.sec.feature.sensorhub_level29.xml"
