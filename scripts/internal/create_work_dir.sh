@@ -103,8 +103,8 @@ COPY_TARGET_AS_SOURCE()
 {
     local MODEL
     local REGION
-    MODEL=$(echo -n "$SOURCE_FIRMWARE" | cut -d "/" -f 1)
-    REGION=$(echo -n "$SOURCE_FIRMWARE" | cut -d "/" -f 2)
+    MODEL=$(echo -n "$TARGET_FIRMWARE" | cut -d "/" -f 1)
+    REGION=$(echo -n "$TARGET_FIRMWARE" | cut -d "/" -f 2)
 
     local COMMON_FOLDERS="odm product system"
     for folder in $COMMON_FOLDERS
