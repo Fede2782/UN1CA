@@ -94,6 +94,11 @@ if $BUILD_ROM; then
     echo -e "\n- Applying debloat list..."
     bash "$SRC_DIR/scripts/internal/apply_debloat.sh"
 
+    if $TARGET_LEGACY_PORT; then
+	[[ -e "$SRC_DIR/target/$TARGET_CODENAME/legacy_port_script.sh" ]] \
+          && bash "$SRC_DIR/target/$TARGET_CODENAME/legacy_port_script.sh"
+    fi
+
     echo -e "\n- Applying ROM packages..."
     bash "$SRC_DIR/scripts/internal/apply_modules.sh" "$SRC_DIR/unica/packages"
 
