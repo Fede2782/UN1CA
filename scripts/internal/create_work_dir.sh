@@ -99,6 +99,33 @@ COPY_SOURCE_FIRMWARE()
     fi
 }
 
+COPY_TARGET_AS_SOURCE()
+{
+    local MODEL
+    local REGION
+    MODEL=$(echo -n "$SOURCE_FIRMWARE" | cut -d "/" -f 1)
+    REGION=$(echo -n "$SOURCE_FIRMWARE" | cut -d "/" -f 2)
+
+    local COMMON_FOLDERS="odm product system"
+    for folder in $COMMON_FOLDERS
+    do
+        if [ ! -d "$WORK_DIR/$folder" ]; then
+            mkdir -p "$WORK_DIR/$folder"
+            cp -a --preserve=all "$FW_DIR/${MODEL}_${REGION}/$folder" "$WORK_DIR"
+            cp --preserve=all "$FW_DIR/${MODEL}_${REGION}/file_context-$folder" "$WORK_DIR/configs"
+            cp --preserve=all "$FW_DIR/${MODEL}_${REGION}/fs_config-$folder" "$WORK_DIR/configs"
+        fi
+    done
+
+    if [ -d "$FW_DIR/${MODEL}_${REGION}/system_ext" ]; then
+            mkdir -p "$WORK_DIR/system_ext"
+            cp -a --preserve=all "$FW_DIR/${MODEL}_${REGION}/system_ext" "$WORK_DIR"
+            cp --preserve=all "$FW_DIR/${MODEL}_${REGION}/file_context-system_ext" "$WORK_DIR/configs"
+            cp --preserve=all "$FW_DIR/${MODEL}_${REGION}/fs_config-system_ext" "$WORK_DIR/configs"
+    fi
+}
+
+
 COPY_TARGET_FIRMWARE()
 {
     local MODEL
@@ -142,7 +169,13 @@ COPY_TARGET_KERNEL()
 
 mkdir -p "$WORK_DIR"
 mkdir -p "$WORK_DIR/configs"
-COPY_SOURCE_FIRMWARE
+
+if $TARGET_LEGACY_PORT; then
+	COPY_TARGET_AS_SOURCE
+else
+	COPY_SOURCE_FIRMWARE
+fi
+
 COPY_TARGET_FIRMWARE
 COPY_TARGET_KERNEL
 
