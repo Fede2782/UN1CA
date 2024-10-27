@@ -145,7 +145,7 @@ system/framework/boot-mediatek-ims-base.vdex
 system/framework/boot-mediatek-framework.vdex
 system/framework/boot-mediatek-common.vdex
 system/priv-app/Accessibility/oat
-system/priv-app/AdaptSound_U/oat
+system/priv-app/AdaptSound_U2/oat
 system/priv-app/AppsEdgePanel_v3.2/oat
 system/priv-app/AppUpdateCenter/oat
 system/priv-app/AREmojiEditor/oat
@@ -254,7 +254,7 @@ system/priv-app/SmartThingsKit/oat
 system/priv-app/SmartTouchCall/oat
 system/priv-app/SOAgent7/oat
 system/priv-app/SohService/oat
-system/priv-app/SoundAlive_U/oat
+system/priv-app/SoundAlive_U2/oat
 system/priv-app/SPPPushClient/oat
 system/priv-app/SsuService/oat
 system/priv-app/StickerFaceARAvatar/oat
@@ -363,6 +363,7 @@ system/priv-app/PaymentFramework
 system/priv-app/SamsungCarKeyFw
 system/priv-app/SamsungPass
 system/priv-app/Upday
+system/priv-app/GlobalPostProcMgr/oat
 "
 
 # eSIM
