@@ -127,6 +127,9 @@ system/framework/boot-telephony-ext.vdex
 system/framework/boot-UxPerformance.vdex
 system/framework/boot.vdex
 system/framework/boot-voip-common.vdex
+system/framework/boot-mediatek-ims-base.vdex
+system/framework/boot-mediatek-framework.vdex
+system/framework/boot-mediatek-common.vdex
 system/priv-app/Accessibility/oat
 system/priv-app/AdaptSound_U/oat
 system/priv-app/AppsEdgePanel_v3.2/oat
