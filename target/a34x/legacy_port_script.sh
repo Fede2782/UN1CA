@@ -221,13 +221,65 @@ ADD_TO_WORK_DIR_FROM_SOURCE "system" "system/etc/permissions/privapp-permissions
 ADD_TO_WORK_DIR_FROM_SOURCE "system" "system/etc/permissions/privapp-permissions-com.sec.hearingadjust_U2.xml" 0 0 644 "u:object_r:system_file:s0"
 ADD_TO_WORK_DIR_FROM_SOURCE "system" "system/priv-app/RubinVersion35/RubinVersion35.apk" 0 0 644 "u:object_r:system_file:s0"
 ADD_TO_WORK_DIR_FROM_SOURCE "system" "system/priv-app/PhotoEditor_AIFull/PhotoEditor_AIFull.apk" 0 0 644 "u:object_r:system_file:s0"
+ADD_TO_WORK_DIR_FROM_SOURCE "system" "system/priv-app/SecFactoryPhoneTest/SecFactoryPhoneTest.apk" 0 0 644 "u:object_r:system_file:s0"
 
+echo "Copying priv-app from source..."
 PDR="$(pwd)"
 cd $WORK_DIR/system/system/priv-app
 PAPPS_LIST=($(find -type f | sed 's/.\///' ))
 for papp in "${PAPPS_LIST[@]}"
 do
   cp -a --preserve=all "$FW_DIR/${SOURCE_MODEL}_${SOURCE_REGION}/system/system/priv-app/$papp" $papp
+done
+
+REMOVE_FROM_WORK_DIR "$WORK_DIR/system/system/framework/verizon.net.sip.jar"
+REMOVE_FROM_WORK_DIR "$WORK_DIR/system/system/framework/msync-lib.jar"
+
+echo "Copying framework from source..."
+cd $WORK_DIR/system/system/framework
+FWK_LIST=($(find -type f | sed 's/.\///' ))
+for fwk in "${FWK_LIST[@]}"
+do
+  cp -a --preserve=all "$FW_DIR/${SOURCE_MODEL}_${SOURCE_REGION}/system/system/framework/$fwk" $fwk
+done
+
+ADD_TO_WORK_DIR_FROM_STOCK "system" "system/framework/msync-lib.jar" 0 0 644 "u:object_r:system_file:s0"
+ADD_TO_WORK_DIR_FROM_STOCK "system" "system/framework/verizon.net.sip.jar" 0 0 644 "u:object_r:system_file:s0"
+
+REMOVE_FROM_WORK_DIR "$WORK_DIR/system/system/app/SecFactoryPhoneTest"
+REMOVE_FROM_WORK_DIR "$WORK_DIR/system/system/app/FunModeSDK"
+
+echo "Copying apps from source..."
+cd $WORK_DIR/system/system/app
+APPS_LIST=($(find -type f | sed 's/.\///' ))
+for app in "${APPS_LIST[@]}"
+do
+  cp -a --preserve=all "$FW_DIR/${SOURCE_MODEL}_${SOURCE_REGION}/system/system/app/$app" $app
+done
+
+#ADD_TO_WORK_DIR_FROM_STOCK "system" "system/app/SecFactoryPhoneTest/SecFactoryPhoneTest.apk" 0 0 644 "u:object_r:system_file:s0"
+ADD_TO_WORK_DIR_FROM_STOCK "system" "system/app/FunModeSDK/FunModeSDK.apk" 0 0 644 "u:object_r:system_file:s0"
+
+ADD_TO_WORK_DIR_FROM_SOURCE "system" "system/app/MhsAiService/MhsAiService.apk" 0 0 644 "u:object_r:system_file:s0"
+ADD_TO_WORK_DIR_FROM_SOURCE "system" "system/app/VisualCloudCore/VisualCloudCore.apk" 0 0 644 "u:object_r:system_file:s0"
+
+# Various etc
+#ADD_TO_WORK_DIR_FROM_SOURCE "system" "system/etc/default-permissions/default-permissions-com.samsung.android.app.tips.xml" 0 0 644 "u:object_r:system_file:s0"
+ADD_TO_WORK_DIR_FROM_SOURCE "system" "system/etc/permissions/com.samsung.android.oneui.version.xml" 0 0 644 "u:object_r:system_file:s0"
+ADD_TO_WORK_DIR_FROM_SOURCE "system" "system/etc/permissions/com.samsung.feature.audio_listenback.xml" 0 0 644 "u:object_r:system_file:s0"
+
+cd $WORK_DIR/system/system/etc/permissions
+PERMISSIONS_LIST=($(find -type f | sed 's/.\///' ))
+for perm in "${PERMISSIONS_LIST[@]}"
+do
+  cp -a --preserve=all -v "$FW_DIR/${SOURCE_MODEL}_${SOURCE_REGION}/system/system/etc/permissions/$perm" $perm >> /dev/null #TODO
+done
+
+cd $WORK_DIR/system/system/etc/sysconfig
+PERMISSIONS_LIST=($(find -type f | sed 's/.\///' ))
+for perm in "${PERMISSIONS_LIST[@]}"
+do
+  cp -a --preserve=all -v "$FW_DIR/${SOURCE_MODEL}_${SOURCE_REGION}/system/system/etc/sysconfig/$perm" $perm >> /dev/null #TODO
 done
 
 cd $PDR

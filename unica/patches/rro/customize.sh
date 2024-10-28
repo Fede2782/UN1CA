@@ -1,6 +1,6 @@
 SKIPUNZIP=1
 
-if [[ -d "$SRC_DIR/target/$TARGET_CODENAME/overlay" ]]; then
+if [[ -d "$SRC_DIR/target/$TARGET_CODENAME/overlay" ]] && ! $TARGET_LEGACY_PORT; then
     bash -e "$SRC_DIR/scripts/apktool.sh" d -f "/product/overlay/framework-res__auto_generated_rro_product.apk"
 
     echo "Applying stock overlay configs"
