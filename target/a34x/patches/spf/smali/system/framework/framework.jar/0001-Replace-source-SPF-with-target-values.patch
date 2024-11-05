@@ -1,15 +1,16 @@
-From bfc292aff65f32371dcbb2179e2123d47d0f9bd0 Mon Sep 17 00:00:00 2001
+From 3e65595bcb45b3672d6b382c4ce3be1067725df4 Mon Sep 17 00:00:00 2001
 From: Fede2782 <78815152+Fede2782@users.noreply.github.com>
-Date: Sun, 20 Oct 2024 17:58:58 +0200
+Date: Sun, 3 Nov 2024 19:48:28 +0100
 Subject: [PATCH] Replace source SPF with target values
 
 ---
- .../android/hardware/fingerprint/FingerprintManager.smali     | 4 ++--
- .../fingerprint/SemFingerprintManager$Characteristics.smali   | 4 ++--
- .../android/bio/fingerprint/SemFingerprintManager.smali       | 2 +-
- .../com/samsung/android/camera/mic/SemMultiMicManager.smali   | 4 ++--
- smali_classes5/com/samsung/android/rune/CoreRune.smali        | 2 +-
- 5 files changed, 8 insertions(+), 8 deletions(-)
+ .../fingerprint/FingerprintManager.smali       |  4 ++--
+ ...SemFingerprintManager$Characteristics.smali |  4 ++--
+ .../fingerprint/SemFingerprintManager.smali    |  2 +-
+ .../camera/mic/SemMultiMicManager.smali        |  4 ++--
+ .../hardware/display/RefreshRateConfig.smali   | 18 +++++-------------
+ .../com/samsung/android/rune/CoreRune.smali    |  2 +-
+ 6 files changed, 13 insertions(+), 21 deletions(-)
 
 diff --git a/smali_classes2/android/hardware/fingerprint/FingerprintManager.smali b/smali_classes2/android/hardware/fingerprint/FingerprintManager.smali
 index f01aa472..54f341ef 100644
@@ -89,6 +90,57 @@ index 975703fb..1b91459a 100644
 +    const-string v2, "07010"
  
      invoke-static {v2}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
+ 
+diff --git a/smali_classes5/com/samsung/android/hardware/display/RefreshRateConfig.smali b/smali_classes5/com/samsung/android/hardware/display/RefreshRateConfig.smali
+index 97fc0e62..93837873 100644
+--- a/smali_classes5/com/samsung/android/hardware/display/RefreshRateConfig.smali
++++ b/smali_classes5/com/samsung/android/hardware/display/RefreshRateConfig.smali
+@@ -431,7 +431,7 @@
+ 
+     move-result-object v0
+ 
+-    const-string v1, "2"
++    const-string v1, "1"
+ 
+     invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+ 
+@@ -507,9 +507,7 @@
+ 
+     move-result-object v0
+ 
+-    const-string v1, "89,91"
+-
+-    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++    invoke-virtual {v0, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+ 
+     move-result-object v0
+ 
+@@ -586,9 +584,7 @@
+ 
+     move-result-object v0
+ 
+-    const-string v1, "200,2500"
+-
+-    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++    invoke-virtual {v0, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+ 
+     move-result-object v0
+ 
+@@ -713,13 +709,9 @@
+ 
+     const-string/jumbo v3, "persist.dm.passive.ambient_brightness"
+ 
+-    const-string v4, "89,91"
+-
+-    const-string v5, "200,2500"
+-
+-    invoke-direct {v0, v4, v5, v2, v3}, Lcom/samsung/android/hardware/display/RefreshRateConfig$BrightnessThreshold;-><init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
++    invoke-direct {v0, v1, v1, v2, v3}, Lcom/samsung/android/hardware/display/RefreshRateConfig$BrightnessThreshold;-><init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+ 
+-    const-string v2, "2"
++    const-string v2, "1"
+ 
+     const-string v3, "60,120"
  
 diff --git a/smali_classes5/com/samsung/android/rune/CoreRune.smali b/smali_classes5/com/samsung/android/rune/CoreRune.smali
 index 85e12484..23f83578 100644

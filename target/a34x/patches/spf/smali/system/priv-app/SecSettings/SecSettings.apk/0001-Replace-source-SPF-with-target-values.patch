@@ -1,12 +1,16 @@
-From 4b54968d735a730411a2d5050542b73178ae360d Mon Sep 17 00:00:00 2001
+From 73a6f764689d76ffde32311ecac81eb3d417e016 Mon Sep 17 00:00:00 2001
 From: Fede2782 <78815152+Fede2782@users.noreply.github.com>
-Date: Sun, 20 Oct 2024 18:50:45 +0200
+Date: Mon, 4 Nov 2024 18:21:32 +0100
 Subject: [PATCH] Replace source SPF with target values
 
 ---
  .../android/wifitrackerlib/WifiEntry.smali    | 118 ++----------------
+ .../mobileap/WifiApCloudBackupRestore.smali   |  89 -------------
+ .../WifiApSmartSwitchBackupRestore.smali      |  52 +-------
+ .../mobileap/utils/WifiApFeatureUtils.smali   |   2 +-
  .../FingerprintSettingsUtils.smali            |   4 +-
- 2 files changed, 10 insertions(+), 112 deletions(-)
+ .../settings/display/SecDisplayUtils.smali    |   4 +-
+ 6 files changed, 14 insertions(+), 255 deletions(-)
 
 diff --git a/smali_classes3/com/android/wifitrackerlib/WifiEntry.smali b/smali_classes3/com/android/wifitrackerlib/WifiEntry.smali
 index f87b3755..1cae4461 100644
@@ -150,6 +154,212 @@ index f87b3755..1cae4461 100644
  .end method
  
  .method public semMatches(Landroid/net/wifi/WifiConfiguration;)Z
+diff --git a/smali_classes3/com/samsung/android/settings/wifi/mobileap/WifiApCloudBackupRestore.smali b/smali_classes3/com/samsung/android/settings/wifi/mobileap/WifiApCloudBackupRestore.smali
+index 7069c5c5..7657ee61 100644
+--- a/smali_classes3/com/samsung/android/settings/wifi/mobileap/WifiApCloudBackupRestore.smali
++++ b/smali_classes3/com/samsung/android/settings/wifi/mobileap/WifiApCloudBackupRestore.smali
+@@ -819,14 +819,6 @@
+ 
+     invoke-virtual {v7, v2, v3}, Lorg/json/JSONObject;->put(Ljava/lang/String;I)Lorg/json/JSONObject;
+ 
+-    const-string v2, "11axWifi6"
+-
+-    invoke-virtual/range {p0 .. p1}, Lcom/samsung/android/settings/wifi/mobileap/WifiApCloudBackupRestore;->get11axWifi6(Landroid/content/Context;)I
+-
+-    move-result v3
+-
+-    invoke-virtual {v7, v2, v3}, Lorg/json/JSONObject;->put(Ljava/lang/String;I)Lorg/json/JSONObject;
+-
+     invoke-static/range {p1 .. p1}, Lcom/samsung/android/settings/wifi/mobileap/utils/WifiApFeatureUtils;->isMobileDataUsageSupported(Landroid/content/Context;)Z
+ 
+     move-result v2
+@@ -971,42 +963,6 @@
+     return-object v0
+ .end method
+ 
+-.method public get11axWifi6(Landroid/content/Context;)I
+-    .locals 2
+-
+-    invoke-virtual {p1}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
+-
+-    move-result-object p1
+-
+-    const-string/jumbo v0, "wifi_ap_11ax_mode_checked"
+-
+-    const/4 v1, 0x0
+-
+-    invoke-static {p1, v0, v1}, Landroid/provider/Settings$Secure;->getInt(Landroid/content/ContentResolver;Ljava/lang/String;I)I
+-
+-    move-result p1
+-
+-    iget-object p0, p0, Lcom/samsung/android/settings/wifi/mobileap/WifiApCloudBackupRestore;->TAG:Ljava/lang/String;
+-
+-    new-instance v0, Ljava/lang/StringBuilder;
+-
+-    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
+-
+-    const-string v1, " 11axWifi6 "
+-
+-    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+-
+-    invoke-virtual {v0, p1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+-
+-    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+-
+-    move-result-object v0
+-
+-    invoke-static {p0, v0}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
+-
+-    return p1
+-.end method
+-
+ .method public getDescription(Landroid/content/Context;)Ljava/lang/String;
+     .locals 0
+ 
+@@ -2486,19 +2442,6 @@
+ 
+     invoke-virtual {v3, v5}, Lorg/json/JSONObject;->has(Ljava/lang/String;)Z
+ 
+-    move-result v5
+-
+-    if-eqz v5, :cond_27
+-
+-    const-string v5, "11axWifi6"
+-
+-    invoke-virtual {v3, v5}, Lorg/json/JSONObject;->getInt(Ljava/lang/String;)I
+-
+-    move-result v5
+-
+-    invoke-virtual {v1, v5, v2}, Lcom/samsung/android/settings/wifi/mobileap/WifiApCloudBackupRestore;->set11axWifi6(ILandroid/content/Context;)V
+-
+-    :cond_27
+     invoke-virtual {v8}, Landroid/net/wifi/SoftApConfiguration$Builder;->build()Landroid/net/wifi/SoftApConfiguration;
+ 
+     move-result-object v5
+@@ -2818,38 +2761,6 @@
+     return-void
+ .end method
+ 
+-.method public set11axWifi6(ILandroid/content/Context;)V
+-    .locals 2
+-
+-    iget-object p0, p0, Lcom/samsung/android/settings/wifi/mobileap/WifiApCloudBackupRestore;->TAG:Ljava/lang/String;
+-
+-    new-instance v0, Ljava/lang/StringBuilder;
+-
+-    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
+-
+-    const-string v1, " 11axWifi6 "
+-
+-    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+-
+-    invoke-virtual {v0, p1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
+-
+-    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+-
+-    move-result-object v0
+-
+-    invoke-static {p0, v0}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
+-
+-    invoke-virtual {p2}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
+-
+-    move-result-object p0
+-
+-    const-string/jumbo p2, "wifi_ap_11ax_mode_checked"
+-
+-    invoke-static {p0, p2, p1}, Landroid/provider/Settings$Secure;->putInt(Landroid/content/ContentResolver;Ljava/lang/String;I)Z
+-
+-    return-void
+-.end method
+-
+ .method public setDisableRandomMac(ILandroid/content/Context;)V
+     .locals 2
+ 
+diff --git a/smali_classes3/com/samsung/android/settings/wifi/mobileap/WifiApSmartSwitchBackupRestore.smali b/smali_classes3/com/samsung/android/settings/wifi/mobileap/WifiApSmartSwitchBackupRestore.smali
+index 41382649..bed6b449 100644
+--- a/smali_classes3/com/samsung/android/settings/wifi/mobileap/WifiApSmartSwitchBackupRestore.smali
++++ b/smali_classes3/com/samsung/android/settings/wifi/mobileap/WifiApSmartSwitchBackupRestore.smali
+@@ -3331,25 +3331,9 @@
+ 
+     invoke-virtual {v12}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+ 
+-    move-result-object v12
+-
+-    invoke-static {v10, v12}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
+-
+-    invoke-virtual/range {p1 .. p1}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
+-
+-    move-result-object v10
+-
+-    const-string/jumbo v12, "wifi_ap_11ax_mode_checked"
+-
+-    invoke-virtual {v6}, Ljava/lang/String;->trim()Ljava/lang/String;
+-
+     move-result-object v6
+ 
+-    invoke-static {v6}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
+-
+-    move-result v6
+-
+-    invoke-static {v10, v12, v6}, Landroid/provider/Settings$Secure;->putInt(Landroid/content/ContentResolver;Ljava/lang/String;I)Z
++    invoke-static {v10, v6}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
+ 
+     goto/16 :goto_8
+ 
+@@ -6501,40 +6485,6 @@
+ 
+     invoke-virtual {v12, v10}, Ljava/io/FileWriter;->write(Ljava/lang/String;)V
+ 
+-    new-instance v3, Ljava/lang/StringBuilder;
+-
+-    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
+-
+-    const-string v4, "11axWifi6="
+-
+-    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+-
+-    invoke-virtual/range {p1 .. p1}, Landroid/content/Context;->getContentResolver()Landroid/content/ContentResolver;
+-
+-    move-result-object v4
+-
+-    const-string/jumbo v5, "wifi_ap_11ax_mode_checked"
+-
+-    const/4 v6, 0x0
+-
+-    invoke-static {v4, v5, v6}, Landroid/provider/Settings$Secure;->getInt(Landroid/content/ContentResolver;Ljava/lang/String;I)I
+-
+-    move-result v4
+-
+-    invoke-static {v4}, Ljava/lang/Integer;->toString(I)Ljava/lang/String;
+-
+-    move-result-object v4
+-
+-    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+-
+-    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
+-
+-    move-result-object v3
+-
+-    invoke-virtual {v12, v3}, Ljava/io/FileWriter;->write(Ljava/lang/String;)V
+-
+-    invoke-virtual {v12, v10}, Ljava/io/FileWriter;->write(Ljava/lang/String;)V
+-
+     sget-boolean v3, Lcom/android/settings/Utils;->SUPPORT_MOBILEAP_WIFISHARING:Z
+     :try_end_6
+     .catch Ljava/lang/Exception; {:try_start_6 .. :try_end_6} :catch_2
+diff --git a/smali_classes3/com/samsung/android/settings/wifi/mobileap/utils/WifiApFeatureUtils.smali b/smali_classes3/com/samsung/android/settings/wifi/mobileap/utils/WifiApFeatureUtils.smali
+index 227d4132..3519b282 100644
+--- a/smali_classes3/com/samsung/android/settings/wifi/mobileap/utils/WifiApFeatureUtils.smali
++++ b/smali_classes3/com/samsung/android/settings/wifi/mobileap/utils/WifiApFeatureUtils.smali
+@@ -521,7 +521,7 @@
+ .method public static isWifi6StandardSupported(Landroid/content/Context;)Z
+     .locals 0
+ 
+-    const/4 p0, 0x1
++    const/4 p0, 0x0
+ 
+     return p0
+ .end method
 diff --git a/smali_classes4/com/samsung/android/settings/biometrics/fingerprint/FingerprintSettingsUtils.smali b/smali_classes4/com/samsung/android/settings/biometrics/fingerprint/FingerprintSettingsUtils.smali
 index caf070ee..dffbb16d 100644
 --- a/smali_classes4/com/samsung/android/settings/biometrics/fingerprint/FingerprintSettingsUtils.smali
@@ -171,6 +381,28 @@ index caf070ee..dffbb16d 100644
 +    const-string v2, "google_touch_display_optical,settings=3"
  
      invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+ 
+diff --git a/smali_classes4/com/samsung/android/settings/display/SecDisplayUtils.smali b/smali_classes4/com/samsung/android/settings/display/SecDisplayUtils.smali
+index 78978dca..87ec34dd 100644
+--- a/smali_classes4/com/samsung/android/settings/display/SecDisplayUtils.smali
++++ b/smali_classes4/com/samsung/android/settings/display/SecDisplayUtils.smali
+@@ -2577,7 +2577,7 @@
+ 
+     if-eq p1, v0, :cond_0
+ 
+-    const-string p0, "2"
++    const-string p0, "1"
+ 
+     invoke-static {p0}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
+ 
+@@ -6804,7 +6804,7 @@
+ 
+     if-eq p1, v3, :cond_1
+ 
+-    const-string p0, "2"
++    const-string p0, "1"
+ 
+     invoke-static {p0}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
  
 -- 
 2.45.2

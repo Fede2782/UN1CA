@@ -146,6 +146,7 @@ system/framework/boot-mediatek-framework.vdex
 system/framework/boot-mediatek-common.vdex
 system/priv-app/Accessibility/oat
 system/priv-app/AdaptSound_U2/oat
+system/priv-app/AdaptSound_U/oat
 system/priv-app/AppsEdgePanel_v3.2/oat
 system/priv-app/AppUpdateCenter/oat
 system/priv-app/AREmojiEditor/oat
@@ -255,6 +256,7 @@ system/priv-app/SmartTouchCall/oat
 system/priv-app/SOAgent7/oat
 system/priv-app/SohService/oat
 system/priv-app/SoundAlive_U2/oat
+system/priv-app/SoundAlive_U/oat
 system/priv-app/SPPPushClient/oat
 system/priv-app/SsuService/oat
 system/priv-app/StickerFaceARAvatar/oat
@@ -276,6 +278,7 @@ system/priv-app/SHClient/oat
 system/priv-app/SmartManager_v5/oat
 system/priv-app/CallAssistant/oat
 system/priv-app/KnoxGuard/oat
+system/priv-app/SamsungCamera/SamsungCamera.apk.prof
 "
 SYSTEM_EXT_DEBLOAT+="
 framework/oat
@@ -289,6 +292,8 @@ app/GoogleCalendarSyncAdapter/oat
 app/GoogleLocationHistory/oat
 app/SpeechServicesByGoogle/oat
 app/WebViewGoogle/oat
+priv-app/AiWallpaper/oat
+app/AssistantShell/oat
 priv-app/AndroidAutoStub/oat
 priv-app/AndroidSystemIntelligence/oat
 priv-app/ConfigUpdater/oat
@@ -313,13 +318,11 @@ etc/init/vendor_flash_recovery.rc
 
 # Apps debloat
 PRODUCT_DEBLOAT+="
-app/Chrome
 app/DuoStub
 app/Gmail2
 app/Maps
 app/YouTube
 priv-app/Messages
-priv-app/SearchSelector
 "
 SYSTEM_DEBLOAT+="
 system/app/DictDiotekForSec

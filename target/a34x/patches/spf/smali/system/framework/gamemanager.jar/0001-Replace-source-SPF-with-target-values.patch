@@ -1,0 +1,25 @@
+From d0d057bd7b6f32bf8321fb36e0a671098ed66ba1 Mon Sep 17 00:00:00 2001
+From: Fede2782 <78815152+Fede2782@users.noreply.github.com>
+Date: Sun, 3 Nov 2024 19:31:47 +0100
+Subject: [PATCH] Replace source SPF with target values
+
+---
+ smali/com/samsung/android/game/GameManagerService.smali | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/smali/com/samsung/android/game/GameManagerService.smali b/smali/com/samsung/android/game/GameManagerService.smali
+index 52c81fb..e898df8 100644
+--- a/smali/com/samsung/android/game/GameManagerService.smali
++++ b/smali/com/samsung/android/game/GameManagerService.smali
+@@ -3119,7 +3119,7 @@
+ 
+     const/4 v0, 0x0
+ 
+-    const-string v1, "2"
++    const-string v1, "1"
+ 
+     invoke-static {v1}, Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I
+ 
+-- 
+2.45.2
+
