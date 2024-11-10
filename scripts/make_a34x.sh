@@ -7,6 +7,12 @@ if $NEED_FW_DOWNLOAD; then
     bash "$SRC_DIR/scripts/extract_fw.sh"
 fi
 
+BUILD_ZIP=false
+BUILD_TAR=false
+
+[[ "$TARGET_INSTALL_METHOD" == "zip" ]] && BUILD_ZIP=true
+[[ "$TARGET_INSTALL_METHOD" == "odin" ]] && BUILD_TAR=true
+
 PDR="$(pwd)"
 
 SOURCE_REGION=$(echo -n "$SOURCE_FIRMWARE" | cut -d "/" -f 2)
@@ -14,6 +20,34 @@ SOURCE_MODEL=$(echo -n "$SOURCE_FIRMWARE" | cut -d "/" -f 1)
 
 TARGET_REGION=$(echo -n "$TARGET_FIRMWARE" | cut -d "/" -f 2)
 TARGET_MODEL=$(echo -n "$TARGET_FIRMWARE" | cut -d "/" -f 1)
+
+
+while [ "$#" != 0 ]; do
+    case "$1" in
+        "--no-rom-zip")
+            if $BUILD_TAR; then
+                echo "TARGET_INSTALL_METHOD is \"odin\", ignoring --no-rom-zip"
+            else
+                BUILD_ZIP=false
+            fi
+            ;;
+        "--no-rom-tar")
+            if $BUILD_ZIP; then
+                echo "TARGET_INSTALL_METHOD is \"zip\", ignoring --no-rom-tar"
+            else
+                BUILD_TAR=false
+            fi
+            ;;
+        *)
+            echo "Usage: make_rom [options]"
+            echo " --no-rom-zip : Do not build ROM zip"
+            echo " --no-rom-tar : Do not build ROM tar"
+            exit 1
+            ;;
+    esac
+
+    shift
+done
 
 echo "Setting up workdir..."
 rm -rf $WORK_DIR
@@ -89,6 +123,8 @@ for papp in "${PAPPS_LIST[@]}"
 do
   cp -a --preserve=all "$FW_DIR/${SOURCE_MODEL}_${SOURCE_REGION}/system/system/priv-app/$papp" $papp
 done
+
+ADD_TO_WORK_DIR_FROM_SOURCE "system" "system/priv-app/GlobalPostProcMgr/GlobalPostProcMgr.apk" 0 0 644 "u:object_r:system_file:s0"
 
 echo "Porting frameworks from source..."
 cd $WORK_DIR/system/system/framework
@@ -213,11 +249,20 @@ SET_PROP "ro.system.build.version.sehi" \
     "$WORK_DIR/system/system/build.prop"
 
 cd "$WORK_DIR/system/system/apex"
-APEX_LIST=($(find -type f | sed 's/.\///' )) #| grep google))
+APEX_LIST=($(find -type f | sed 's/.\///' | grep google))
 for apex in "${APEX_LIST[@]}"
 do
   cp -a --preserve=all "$FW_DIR/${SOURCE_MODEL}_${SOURCE_REGION}/system/system/apex/$apex" $apex
 done
+
+# TEMPFIX: Add ese files
+ADD_TO_WORK_DIR_FROM_SOURCE "system" "system/framework/esecomm.jar" 0 0 644 "u:object_r:system_file:s0"
+ADD_TO_WORK_DIR_FROM_SOURCE "system" "system/app/ESEServiceAgent/ESEServiceAgent.apk" 0 0 644 "u:object_r:system_file:s0"
+ADD_TO_WORK_DIR_FROM_SOURCE "system" "system/lib/libucm_esecomm_adapter.so" 0 0 644 "u:object_r:system_lib_file:s0"
+ADD_TO_WORK_DIR_FROM_SOURCE "system" "system/lib64/libucm_esecomm_adapter.so" 0 0 644 "u:object_r:system_lib_file:s0"
+ADD_TO_WORK_DIR_FROM_SOURCE "system" "system/etc/permissions/com.sec.esecomm.xml" 0 0 644 "u:object_r:system_file:s0"
+ADD_TO_WORK_DIR_FROM_SOURCE "system" "system/etc/permissions/com.android.nfc_extras.xml" 0 0 644 "u:object_r:system_file:s0"
+ADD_TO_WORK_DIR_FROM_SOURCE "system" "system/framework/com.android.nfc_extras.jar" 0 0 644 "u:object_r:system_file:s0"
 
 echo "Applying patches..."
 bash "$SRC_DIR/scripts/internal/apply_modules.sh" "$SRC_DIR/target/a34x/patches"
@@ -226,9 +271,6 @@ echo -e "\n- Recompiling APKs/JARs..."
 while read -r i; do
     bash "$SRC_DIR/scripts/apktool.sh" b "$i"
 done <<< "$(find "$OUT_DIR/apktool" -type d \( -name "*.apk" -o -name "*.jar" \) -printf "%p\n" | sed "s.$OUT_DIR/apktool..")"
-
-[[ "$TARGET_INSTALL_METHOD" == "zip" ]] && BUILD_ZIP=true
-[[ "$TARGET_INSTALL_METHOD" == "odin" ]] && BUILD_TAR=true
 
 if $BUILD_ZIP; then
     echo "- Building ROM zip..."
