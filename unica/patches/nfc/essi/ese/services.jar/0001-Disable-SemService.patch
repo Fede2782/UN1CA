@@ -66,7 +66,7 @@ index ca92a06e..cb0fc5d0 100644
 -    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 +    const-string v5, "eSE_COS: "
  
--    const-string v4, "JCOP6.3U"
+-    const-string v4, "UT8.0U"
 +    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
  
 -    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;

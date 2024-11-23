@@ -167,7 +167,7 @@ if [[ "$(GET_FP_SENSOR_TYPE "$SOURCE_FP_SENSOR_CONFIG")" != "$(GET_FP_SENSOR_TYP
 
     # TODO: handle ultrasonic devices
     if [[ "$(GET_FP_SENSOR_TYPE "$TARGET_FP_SENSOR_CONFIG")" == "optical" ]]; then
-        if [["$TARGET_SINGLE_SYSTEM_IMAGE" == "qssi" ]]; then
+        if [[ "$TARGET_SINGLE_SYSTEM_IMAGE" == "qssi" ]]; then
             cp -a --preserve=all "$SRC_DIR/unica/patches/product_feature/fingerprint/optical_fod/system/"* "$WORK_DIR/system/system"
             APPLY_PATCH "system/priv-app/SecSettings/SecSettings.apk" "fingerprint/SecSettings.apk/0001-Enable-isOpticalSensor.patch"
             APPLY_PATCH "system_ext/priv-app/SystemUI/SystemUI.apk" "fingerprint/SystemUI.apk/0001-Add-optical-FOD-support.patch"
@@ -238,10 +238,11 @@ fi
 if ! $SOURCE_HAS_QHD_DISPLAY; then
     if $TARGET_HAS_QHD_DISPLAY; then
         echo "Applying multi resolution patches"
-        if [["$TARGET_SINGLE_SYSTEM_IMAGE" == "qssi" ]]; then
+        if [[ "$TARGET_SINGLE_SYSTEM_IMAGE" == "qssi" ]]; then
             cp -a --preserve=all "$SRC_DIR/unica/patches/product_feature/resolution/qssi/system/"* "$WORK_DIR/system/system"
-        elif [["$TARGET_SINGLE_SYSTEM_IMAGE" == "essi" ]]; then
+        elif [[ "$TARGET_SINGLE_SYSTEM_IMAGE" == "essi" ]]; then
             cp -a --preserve=all "$SRC_DIR/unica/patches/product_feature/resolution/essi/system/"* "$WORK_DIR/system/system"
+	fi
         APPLY_PATCH "system/framework/framework.jar" "resolution/multi_res/framework.jar/0001-Enable-dynamic-resolution-control.patch"
         APPLY_PATCH "system/priv-app/SecSettings/SecSettings.apk" "resolution/multi_res/SecSettings.apk/0001-Enable-dynamic-resolution-control.patch"
     fi
