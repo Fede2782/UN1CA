@@ -236,7 +236,10 @@ fi
 if ! $SOURCE_HAS_QHD_DISPLAY; then
     if $TARGET_HAS_QHD_DISPLAY; then
         echo "Applying multi resolution patches"
-        cp -a --preserve=all "$SRC_DIR/unica/patches/product_feature/resolution/system/"* "$WORK_DIR/system/system"
+        if [["$TARGET_SINGLE_SYSTEM_IMAGE" == "qssi" ]]; then
+            cp -a --preserve=all "$SRC_DIR/unica/patches/product_feature/resolution/qssi/system/"* "$WORK_DIR/system/system"
+        elif [["$TARGET_SINGLE_SYSTEM_IMAGE" == "essi" ]]; then
+            cp -a --preserve=all "$SRC_DIR/unica/patches/product_feature/resolution/essi/system/"* "$WORK_DIR/system/system"
         APPLY_PATCH "system/framework/framework.jar" "resolution/multi_res/framework.jar/0001-Enable-dynamic-resolution-control.patch"
         APPLY_PATCH "system/priv-app/SecSettings/SecSettings.apk" "resolution/multi_res/SecSettings.apk/0001-Enable-dynamic-resolution-control.patch"
     fi
