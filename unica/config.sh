@@ -89,6 +89,7 @@ case "$TARGET_SINGLE_SYSTEM_IMAGE" in
         SOURCE_MULTI_MIC_MANAGER_VERSION="07020"
         SOURCE_SSRM_CONFIG_NAME="siop_r11s_exynos2200"
         SOURCE_SUPPORT_CUTOUT_PROTECTION=false
+	;;
     *)
         echo "\"$TARGET_SINGLE_SYSTEM_IMAGE\" is not a valid system image."
         return 1
