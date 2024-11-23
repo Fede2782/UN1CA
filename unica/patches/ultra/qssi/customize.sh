@@ -32,7 +32,7 @@ REGION=$(echo -n "$TARGET_FIRMWARE" | cut -d "/" -f 2)
 
 if [ -d "$FW_DIR/${MODEL}_${REGION}/system/system/media/audio/pensounds" ]; then
 
-    cp -a --preserve=all "$SRC_DIR/unica/patches/ultra/system/"* "$WORK_DIR/system/system"
+    cp -a --preserve=all "$SRC_DIR/unica/patches/ultra/qssi/system/"* "$WORK_DIR/system/system"
 
     if ! grep -q "AirReadingGlass" "$WORK_DIR/configs/file_context-system"; then
         {
