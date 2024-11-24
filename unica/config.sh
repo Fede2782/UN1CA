@@ -75,7 +75,7 @@ case "$TARGET_SINGLE_SYSTEM_IMAGE" in
         SOURCE_ESE_COS_NAME="UT8.0U"
         SOURCE_FP_SENSOR_CONFIG="google_touch_display_optical,settings=3,aod_transition_animation"
         SOURCE_HAS_HW_MDNIE=false
-        SOURCE_HAS_MASS_CAMERA_APP=true
+        SOURCE_HAS_MASS_CAMERA_APP=false
         SOURCE_HAS_QHD_DISPLAY=false
         SOURCE_HFR_MODE="2"
         SOURCE_HFR_SUPPORTED_REFRESH_RATE="60,120"
