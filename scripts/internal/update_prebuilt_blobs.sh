@@ -101,7 +101,7 @@ case "$1" in
         ;;
     "unica/patches/uwb/essi")
         MODULE="$1"
-        FW="SM-S908B/EUX/350048581234569"
+        FW="SM-S908B/BTE/350048581234569"
         BLOBS="$(find "$SRC_DIR/unica/patches/uwb/essi/system" -type f | sed "s.$SRC_DIR/unica/patches/uwb/essi.system.")"
         BLOBS+="$(find "$SRC_DIR/unica/patches/uwb/essi/system_ext" -type f -printf "\n%p" | sed "s.$SRC_DIR/unica/patches/uwb/essi/.." | sed 's/system_ext/system\/system\/system_ext/' )"
         ;;
