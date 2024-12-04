@@ -56,7 +56,7 @@ case "$1" in
         ;;
     "unica/patches/nfc/essi")
         MODULE="$1"
-        FW="SM-A166B/EUX/352907210123451"
+        FW="SM-A256B/EUX/356513701234561"
         BLOBS="$(find "$SRC_DIR/unica/patches/nfc/essi/system" -type f | sed "s.$SRC_DIR/unica/patches/nfc/essi.system.")"
         ;;
     "unica/patches/product_feature/fingerprint/optical_fod")
