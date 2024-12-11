@@ -99,7 +99,6 @@ system/etc/public.libraries-camera.samsung.txt
 system/lib64/libapex_jni.media.samsung.so
 system/lib64/libFace_Landmark_API.camera.samsung.so
 system/lib64/libFace_Landmark_Engine.camera.samsung.so
-system/lib64/libFacePreProcessing.camera.samsung.so
 system/lib64/libFaceRestoration.camera.samsung.so
 system/lib64/libFacialStickerEngine.arcsoft.so
 system/lib64/libhigh_dynamic_range.arcsoft.so
