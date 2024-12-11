@@ -1,0 +1,5 @@
+# Fix Edge lighting corner radius
+ro.factory.model=SM-G998B
+
+# Disable CameraX exts
+ro.camerax.extensions.enabled=

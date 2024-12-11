@@ -1,0 +1,8 @@
+# Disable UFFD GC
+ro.dalvik.vm.enable_uffd_gc=false
+
+# Define FRP
+ro.frp.pst=/dev/block/persistent
+
+# Bluetooth
+bluetooth.profile.asha.central.enabled=false

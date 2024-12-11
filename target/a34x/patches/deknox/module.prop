@@ -1,0 +1,4 @@
+id=deknox
+name=Nuke Knox
+author=Fede2782
+description=Removes Knox bloat (DEFEX, RKP, KDP, FIVE, UH, PROCA) from kernel.

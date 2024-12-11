@@ -1,0 +1,4 @@
+id=selinux
+name=SELinux fix
+author=BlackMesa123
+description=Removes unsupported sepolicy entries.
