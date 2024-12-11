@@ -5628,7 +5628,7 @@ index 00000000..0b266327
 +.method static constructor <clinit>()V
 +    .locals 3
 +
-+    const/4 v0, 0x4
++    const/4 v0, 0x3
 +
 +    new-array v0, v0, [Ljava/lang/String;
 +
@@ -5647,12 +5647,6 @@ index 00000000..0b266327
 +    const/4 v1, 0x2
 +
 +    const-string v2, "a72q"
-+
-+    aput-object v2, v0, v1
-+
-+    const/4 v1, 0x3
-+
-+    const-string v2, "a34x"
 +
 +    aput-object v2, v0, v1
 +
@@ -5785,29 +5779,10 @@ index 00000000..0b266327
 +
 +# virtual methods
 +.method public getAvailabilityStatus()I
-+    .locals 2
++    .locals 0
 +
 +    const/4 p0, 0x0
 +
-+    const-string v0, "ro.product.vendor.device"
-+
-+    const-string v1, ""
-+
-+    invoke-static {v0, v1}, Landroid/os/SemSystemProperties;->get(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
-+
-+    move-result-object v0
-+
-+    const-string v1, "a34x"
-+
-+    invoke-virtual {v0, v1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-+
-+    move-result-object v0
-+
-+    if-eqz v0, :cond_0
-+
-+    const/4 p0, 0x3
-+
-+    :cond_0
 +    return p0
 +.end method
 +

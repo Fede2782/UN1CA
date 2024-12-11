@@ -190,7 +190,7 @@ index 00000000..6b06b7ef
 +.method static constructor blacklist <clinit>()V
 +    .locals 7
 +
-+    const/4 v0, 0x4
++    const/4 v0, 0x3
 +
 +    new-array v0, v0, [Ljava/lang/String;
 +
@@ -209,12 +209,6 @@ index 00000000..6b06b7ef
 +    const/4 v1, 0x2
 +
 +    const-string v3, "a72q"
-+
-+    aput-object v3, v0, v1
-+
-+    const/4 v1, 0x3
-+
-+    const-string v3, "a34x"
 +
 +    aput-object v3, v0, v1
 +
