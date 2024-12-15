@@ -29,9 +29,11 @@ FORCE=false
 BUILD_ROM=false
 BUILD_ZIP=false
 BUILD_TAR=false
+BUILD_IMG=false
 
 [[ "$TARGET_INSTALL_METHOD" == "zip" ]] && BUILD_ZIP=true
 [[ "$TARGET_INSTALL_METHOD" == "odin" ]] && BUILD_TAR=true
+[[ "$TARGET_INSTALL_METHOD" == "img" ]] && BUILD_IMG=true
 
 while [ "$#" != 0 ]; do
     case "$1" in
@@ -41,6 +43,8 @@ while [ "$#" != 0 ]; do
         "--no-rom-zip")
             if $BUILD_TAR; then
                 echo "TARGET_INSTALL_METHOD is \"odin\", ignoring --no-rom-zip"
+            elif $BUILD_IMG; then
+                echo "TARGET_INSTALL_METHOD is \"img\", ignoring --no-rom-zip"
             else
                 BUILD_ZIP=false
             fi
@@ -48,8 +52,19 @@ while [ "$#" != 0 ]; do
         "--no-rom-tar")
             if $BUILD_ZIP; then
                 echo "TARGET_INSTALL_METHOD is \"zip\", ignoring --no-rom-tar"
+            elif $BUILD_IMG; then
+                echo "TARGET_INSTALL_METHOD is \"img\", ignoring --no-rom-tar"
             else
                 BUILD_TAR=false
+            fi
+            ;;
+        "--no-rom-img")
+            if $BUILD_TAR; then
+                echo "TARGET_INSTALL_METHOD is \"odin\", ignoring --no-rom-img"
+            elif $BUILD_ZIP; then
+                echo "TARGET_INSTALL_METHOD is \"zip\", ignoring --no-rom-img"
+            else
+                BUILD_IMG=false
             fi
             ;;
         *)
@@ -57,6 +72,7 @@ while [ "$#" != 0 ]; do
             echo " -f, --force : Force build"
             echo " --no-rom-zip : Do not build ROM zip"
             echo " --no-rom-tar : Do not build ROM tar"
+            echo " --no-rom-img : Do not build ROM img"
             exit 1
             ;;
     esac
@@ -118,6 +134,10 @@ if $BUILD_ZIP; then
 elif $BUILD_TAR; then
     echo "- Building ROM tar..."
     bash "$SRC_DIR/scripts/internal/build_odin_package.sh"
+    echo ""
+elif $BUILD_IMG; then
+    echo "- Building ROM img..."
+    bash "$SRC_DIR/scripts/internal/build_single_image.sh"
     echo ""
 fi
 
