@@ -126,13 +126,13 @@ system/lib64/libUltraWideDistortionCorrection.camera.samsung.so
 system/lib/libapex_jni.media.samsung.so
 system/lib/libSlowShutter_jni.media.samsung.so
 "
-for blob in $BLOBS_LIST
-do
-    ADD_TO_WORK_DIR "system" "$blob" 0 0 644 "u:object_r:system_lib_file:s0"
-done
-{
-    echo "libLttEngine.camera.samsung.so"
-} >> "$WORK_DIR/system/system/etc/public.libraries-camera.samsung.txt"
+#for blob in $BLOBS_LIST
+#do
+#    ADD_TO_WORK_DIR "system" "$blob" 0 0 644 "u:object_r:system_lib_file:s0"
+#done
+#{
+#    echo "libLttEngine.camera.samsung.so"
+#} >> "$WORK_DIR/system/system/etc/public.libraries-camera.samsung.txt"
 
 echo "Fix AI Photo Editor"
 cp -a --preserve=all \

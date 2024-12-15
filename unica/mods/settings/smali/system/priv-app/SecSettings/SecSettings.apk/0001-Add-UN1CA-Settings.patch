@@ -1,6 +1,6 @@
-From 4e6b6a184fad107554cde52483a1b457c154ea1d Mon Sep 17 00:00:00 2001
-From: Fede2782 <78815152+Fede2782@users.noreply.github.com>
-Date: Wed, 11 Dec 2024 21:59:20 +0100
+From f497a826a60c4db6d5f35d7ec22566276d982763 Mon Sep 17 00:00:00 2001
+From: Salvo Giangreco <giangrecosalvo9@gmail.com>
+Date: Fri, 13 Sep 2024 01:59:43 +0200
 Subject: [PATCH] Add UN1CA Settings
 
 ---
@@ -72,11 +72,11 @@ Subject: [PATCH] Add UN1CA Settings
  .../GamesPropsPreferenceController.smali      | 167 ++++++
  ...eDeveloperStatusPreferenceController.smali | 183 ++++++
  ...Controller$$ExternalSyntheticLambda0.smali |  34 ++
- .../LiveBlurPreferenceController.smali        | 349 +++++++++++
+ .../LiveBlurPreferenceController.smali        | 324 +++++++++++
  .../PIFVersionPreferenceController.smali      | 234 ++++++++
  .../ROMVersionPreferenceController.smali      | 266 +++++++++
  ...SecureScreenshotPreferenceController.smali | 183 ++++++
- 72 files changed, 5851 insertions(+), 17 deletions(-)
+ 72 files changed, 5826 insertions(+), 17 deletions(-)
  create mode 100644 res/drawable/sec_ic_settings_unica.xml
  create mode 100644 res/layout-night/unica_settings_logo_layout.xml
  create mode 100644 res/layout/unica_settings_logo_layout.xml
@@ -1296,7 +1296,7 @@ index 936d1e6c..18d38c71 100644
 +    <item type="id" name="unica_logo_wp" />
  </resources>
 diff --git a/res/values/public.xml b/res/values/public.xml
-index 059d9934..4df8bb14 100644
+index 144b9f5d..4af196ef 100644
 --- a/res/values/public.xml
 +++ b/res/values/public.xml
 @@ -5157,6 +5157,7 @@
@@ -1307,7 +1307,7 @@ index 059d9934..4df8bb14 100644
      <public type="color" name="vswl_bottom_buttons_area_background_color" id="0x7f06099f" />
      <public type="color" name="dialog_body_text_color" id="0x7f060137" />
      <public type="color" name="homepage_status_bar_color" id="0x7f06018f" />
-@@ -12138,6 +12139,7 @@
+@@ -12140,6 +12141,7 @@
      <public type="drawable" name="wifi_friction" id="0x7f080bee" />
      <public type="drawable" name="wifi_signal" id="0x7f080bef" />
      <public type="drawable" name="work_challenge_emergency_button_background" id="0x7f080bf0" />
@@ -1315,7 +1315,7 @@ index 059d9934..4df8bb14 100644
      <public type="drawable" name="$accessibility_shortcut_type_software_gesture__0" id="0x7f080016" />
      <public type="drawable" name="$accessibility_shortcut_type_software_gesture__1" id="0x7f080017" />
      <public type="drawable" name="$accessibility_shortcut_type_software_gesture_talkback__0" id="0x7f080018" />
-@@ -12767,6 +12769,8 @@
+@@ -12769,6 +12771,8 @@
      <public type="drawable" name="ws_ic_2step_02" id="0x7f080bf2" />
      <public type="drawable" name="ws_ic_knox_premium" id="0x7f080bf3" />
      <public type="drawable" name="ws_ic_system_lock" id="0x7f080bf4" />
@@ -1324,7 +1324,7 @@ index 059d9934..4df8bb14 100644
      <public type="fraction" name="battery_button_height_fraction" id="0x7f090000" />
      <public type="fraction" name="battery_subpixel_smoothing_left" id="0x7f090001" />
      <public type="fraction" name="battery_subpixel_smoothing_right" id="0x7f090002" />
-@@ -16831,6 +16835,7 @@
+@@ -16833,6 +16837,7 @@
      <public type="id" name="zen_radio_buttons" id="0x7f0a0fcf" />
      <public type="id" name="zen_radio_buttons_content" id="0x7f0a0fd0" />
      <public type="id" name="zoom_layer" id="0x7f0a0fd1" />
@@ -1332,7 +1332,7 @@ index 059d9934..4df8bb14 100644
      <public type="integer" name="app_bar_elevation_anim_duration" id="0x7f0b0000" />
      <public type="integer" name="as_no_item_bottom_weight" id="0x7f0b0001" />
      <public type="integer" name="as_no_item_top_weight" id="0x7f0b0002" />
-@@ -18702,6 +18707,7 @@
+@@ -18704,6 +18709,7 @@
      <public type="layout" name="zen_rule_type" id="0x7f0d063a" />
      <public type="layout" name="zen_rule_type_selection" id="0x7f0d063b" />
      <public type="layout" name="zen_schedule_rule_day" id="0x7f0d063c" />
@@ -1340,7 +1340,7 @@ index 059d9934..4df8bb14 100644
      <public type="layout" name="sud_glif_preference_template_card" id="0x7f0d059c" />
      <public type="layout" name="material_clock_period_toggle_land" id="0x7f0d014d" />
      <public type="layout" name="sec_bluetooth_function_settings_content_land" id="0x7f0d02ac" />
-@@ -32378,6 +32384,40 @@
+@@ -32380,6 +32386,40 @@
      <public type="string" name="zone_time_type_standard" id="0x7f133456" />
      <public type="string" name="zzz_lgt_password_wrong_pin_code1" id="0x7f133457" />
      <public type="string" name="zzz_lgt_password_wrong_pin_code2" id="0x7f133458" />
@@ -1381,7 +1381,7 @@ index 059d9934..4df8bb14 100644
      <public type="style" name="Accessibility.Preference.A11ySeekBarPreference" id="0x7f140000" />
      <public type="style" name="Accessibility.Preference.A11ySeekBarWithButtonsPreference" id="0x7f140001" />
      <public type="style" name="Accessibility.Preference.SingleChoicePreference" id="0x7f140002" />
-@@ -35099,4 +35139,5 @@
+@@ -35101,4 +35141,5 @@
      <public type="xml" name="zen_mode_schedule_rule_settings" id="0x7f16026c" />
      <public type="xml" name="zen_mode_settings" id="0x7f16026d" />
      <public type="xml" name="zen_mode_sound_vibration_settings" id="0x7f16026e" />
@@ -5597,10 +5597,10 @@ index 00000000..e08624b2
 +.end method
 diff --git a/smali_classes4/io/mesalabs/unica/settings/LiveBlurPreferenceController.smali b/smali_classes4/io/mesalabs/unica/settings/LiveBlurPreferenceController.smali
 new file mode 100644
-index 00000000..17d8b83c
+index 00000000..0b266327
 --- /dev/null
 +++ b/smali_classes4/io/mesalabs/unica/settings/LiveBlurPreferenceController.smali
-@@ -0,0 +1,349 @@
+@@ -0,0 +1,324 @@
 +.class public Lio/mesalabs/unica/settings/LiveBlurPreferenceController;
 +.super Lcom/android/settings/core/TogglePreferenceController;
 +.source "LiveBlurPreferenceController.java"
@@ -5628,7 +5628,7 @@ index 00000000..17d8b83c
 +.method static constructor <clinit>()V
 +    .locals 3
 +
-+    const/4 v0, 0x4
++    const/4 v0, 0x3
 +
 +    new-array v0, v0, [Ljava/lang/String;
 +
@@ -5647,12 +5647,6 @@ index 00000000..17d8b83c
 +    const/4 v1, 0x2
 +
 +    const-string v2, "a72q"
-+
-+    aput-object v2, v0, v1
-+
-+    const/4 v1, 0x3
-+
-+    const-string v2, "a34x"
 +
 +    aput-object v2, v0, v1
 +
@@ -5789,25 +5783,6 @@ index 00000000..17d8b83c
 +
 +    const/4 p0, 0x0
 +
-+    const-string v0, "ro.product.vendor.device"
-+
-+    const-string v1, ""
-+
-+    invoke-static {v0, v1}, Landroid/os/SemSystemProperties;->get(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
-+
-+    move-result-object v0
-+
-+    const-string v1, "a34x"
-+
-+    invoke-virtual {v0, v1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-+
-+    move-result-object v0
-+
-+    if-eqz v0, :cond_0
-+
-+    const/4 p0, 0x3
-+
-+    :cond_0
 +    return p0
 +.end method
 +
@@ -6652,5 +6627,5 @@ index 00000000..b3500e39
 +    return p0
 +.end method
 -- 
-2.45.2
+2.47.1
 
