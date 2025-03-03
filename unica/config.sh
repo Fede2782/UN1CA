@@ -16,9 +16,9 @@
 #
 
 # UN1CA configuration file
-ROM_VERSION="2.5.5"
+ROM_VERSION="3.0.0"
 ROM_VERSION+="-$(git rev-parse --short HEAD)"
-ROM_CODENAME="Eureka"
+ROM_CODENAME="Amethyst"
 
 # Source ROM firmware
 case "$TARGET_SINGLE_SYSTEM_IMAGE" in
