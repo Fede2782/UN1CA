@@ -14,6 +14,8 @@ fi
 
 ADD_TO_WORK_DIR "$MODPATH" "system" "." 0 0 755 "u:object_r:system_file:s0"
 
+DECODE_APK "system" "system/priv-app/ChoiDujour/ChoiDujour.apk"
+
 CERT_NAME="aosp_testkey"
 [ -f "$SRC_DIR/security/unica_ota.x509.pem" ] && CERT_NAME="unica_ota"
 
