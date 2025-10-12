@@ -1,0 +1,11 @@
+/vendor u:object_r:vendor_file:s0
+/vendor/lib64 u:object_r:vendor_file:s0
+/vendor/lib64/vendor\.samsung\.hardware\.security\.ssu-V1-ndk\.so u:object_r:vendor_file:s0
+/vendor/bin u:object_r:vendor_file:s0
+/vendor/bin/vendor\.samsung\.hardware\.security\.ssu-service u:object_r:hal_ssu_default_exec:s0
+/vendor/etc u:object_r:vendor_configs_file:s0
+/vendor/etc/vintf u:object_r:vendor_configs_file:s0
+/vendor/etc/vintf/manifest u:object_r:vendor_configs_file:s0
+/vendor/etc/vintf/manifest/vendor\.samsung\.hardware\.security\.ssu-manifest\.xml u:object_r:vendor_configs_file:s0
+/vendor/etc/init u:object_r:vendor_configs_file:s0
+/vendor/etc/init/vendor\.samsung\.hardware\.security\.ssu-service\.rc u:object_r:vendor_configs_file:s0
