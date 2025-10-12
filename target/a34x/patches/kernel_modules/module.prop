@@ -1,0 +1,4 @@
+id=kernel_modules
+name=GKI kernel modules
+author=Fede2782
+description=Make sure new modules are compatible with older bootloader
