@@ -1,0 +1,155 @@
+# --- Start patching firmware partitions ---
+
+if getprop("ro.boot.bootloader") == "A346BXXSBDYI1" then
+
+ui_print("Detected A346BXXSBDYI1 bootloader installed. Proceeding with installation");
+# Camera Video Processing Unit
+ui_print("Full Patching cam_vpu1-verified.img img...");
+package_extract_file("cam_vpu1-A346B-verified.img", "/dev/block/by-name/cam_vpu1");
+
+ui_print("Full Patching cam_vpu2-verified.img img...");
+package_extract_file("cam_vpu2-A346B-verified.img", "/dev/block/by-name/cam_vpu2");
+
+ui_print("Full Patching cam_vpu3-verified.img img...");
+package_extract_file("cam_vpu3-A346B-verified.img", "/dev/block/by-name/cam_vpu3");
+
+# Audio Digital Signal Processing
+ui_print("Full Patching audio_dsp-verified.img img...");
+package_extract_file("audio_dsp-A346B-verified.img", "/dev/block/by-name/audio_dsp");
+
+# Voice Wakeup
+ui_print("Full Patching scp-verified.img img...");
+package_extract_file("scp-A346B-verified.img", "/dev/block/by-name/scp1");
+
+# DTBO
+ui_print("Full Patching dtbo.img img...");
+package_extract_file("dtbo-A346B-verified.img", "/dev/block/by-name/dtbo");
+
+else
+
+if (getprop("ro.boot.bootloader") == "A346EXXSADYG1" || getprop("ro.boot.bootloader") == "A346EXXSADYH1") then
+
+ui_print("Detected A346EXXSADYH1 or A346EXXSADYG1 bootloader installed. Proceeding with installation");
+# Camera Video Processing Unit
+ui_print("Full Patching cam_vpu1-verified.img img...");
+package_extract_file("cam_vpu1-A346E-verified.img", "/dev/block/by-name/cam_vpu1");
+
+ui_print("Full Patching cam_vpu2-verified.img img...");
+package_extract_file("cam_vpu2-A346E-verified.img", "/dev/block/by-name/cam_vpu2");
+
+ui_print("Full Patching cam_vpu3-verified.img img...");
+package_extract_file("cam_vpu3-A346E-verified.img", "/dev/block/by-name/cam_vpu3");
+
+# Audio Digital Signal Processing
+ui_print("Full Patching audio_dsp-verified.img img...");
+package_extract_file("audio_dsp-A346E-verified.img", "/dev/block/by-name/audio_dsp");
+
+# Voice Wakeup
+ui_print("Full Patching scp-verified.img img...");
+package_extract_file("scp-A346E-verified.img", "/dev/block/by-name/scp1");
+
+# DTBO
+ui_print("Full Patching dtbo.img img...");
+package_extract_file("dtbo-A346E-verified.img", "/dev/block/by-name/dtbo");
+
+else
+
+if getprop("ro.boot.bootloader") == "A346MUBSBDYI1" then
+
+ui_print("Detected A346MUBSBDYI1 bootloader installed. Proceeding with installation");
+# Camera Video Processing Unit
+ui_print("Full Patching cam_vpu1-verified.img img...");
+package_extract_file("cam_vpu1-A346M-verified.img", "/dev/block/by-name/cam_vpu1");
+
+ui_print("Full Patching cam_vpu2-verified.img img...");
+package_extract_file("cam_vpu2-A346M-verified.img", "/dev/block/by-name/cam_vpu2");
+
+ui_print("Full Patching cam_vpu3-verified.img img...");
+package_extract_file("cam_vpu3-A346M-verified.img", "/dev/block/by-name/cam_vpu3");
+
+# Audio Digital Signal Processing
+ui_print("Full Patching audio_dsp-verified.img img...");
+package_extract_file("audio_dsp-A346M-verified.img", "/dev/block/by-name/audio_dsp");
+
+# Voice Wakeup
+ui_print("Full Patching scp-verified.img img...");
+package_extract_file("scp-A346M-verified.img", "/dev/block/by-name/scp1");
+
+# DTBO
+ui_print("Full Patching dtbo.img img...");
+package_extract_file("dtbo-A346M-verified.img", "/dev/block/by-name/dtbo");
+
+else
+
+if getprop("ro.boot.bootloader") == "A346NKSSADYG1" then
+
+ui_print("Detected A346NKSSADYG1 bootloader installed. Proceeding with installation");
+# Camera Video Processing Unit
+ui_print("Full Patching cam_vpu1-verified.img img...");
+package_extract_file("cam_vpu1-A346N-verified.img", "/dev/block/by-name/cam_vpu1");
+
+ui_print("Full Patching cam_vpu2-verified.img img...");
+package_extract_file("cam_vpu2-A346N-verified.img", "/dev/block/by-name/cam_vpu2");
+
+ui_print("Full Patching cam_vpu3-verified.img img...");
+package_extract_file("cam_vpu3-A346N-verified.img", "/dev/block/by-name/cam_vpu3");
+
+# Audio Digital Signal Processing
+ui_print("Full Patching audio_dsp-verified.img img...");
+package_extract_file("audio_dsp-A346N-verified.img", "/dev/block/by-name/audio_dsp");
+
+# Voice Wakeup
+ui_print("Full Patching scp-verified.img img...");
+package_extract_file("scp-A346N-verified.img", "/dev/block/by-name/scp1");
+
+# DTBO
+ui_print("Full Patching dtbo.img img...");
+package_extract_file("dtbo-A346N-verified.img", "/dev/block/by-name/dtbo");
+
+else
+
+if getprop("ro.boot.bootloader") == "A3460ZHSADYG1" then
+
+ui_print("Detected A3460ZHSADYG1 bootloader installed. Proceeding with installation");
+# Camera Video Processing Unit
+ui_print("Full Patching cam_vpu1-verified.img img...");
+package_extract_file("cam_vpu1-A3460-verified.img", "/dev/block/by-name/cam_vpu1");
+
+ui_print("Full Patching cam_vpu2-verified.img img...");
+package_extract_file("cam_vpu2-A3460-verified.img", "/dev/block/by-name/cam_vpu2");
+
+ui_print("Full Patching cam_vpu3-verified.img img...");
+package_extract_file("cam_vpu3-A3460-verified.img", "/dev/block/by-name/cam_vpu3");
+
+# Audio Digital Signal Processing
+ui_print("Full Patching audio_dsp-verified.img img...");
+package_extract_file("audio_dsp-A3460-verified.img", "/dev/block/by-name/audio_dsp");
+
+# Voice Wakeup
+ui_print("Full Patching scp-verified.img img...");
+package_extract_file("scp-A3460-verified.img", "/dev/block/by-name/scp1");
+
+# DTBO
+ui_print("Full Patching dtbo.img img...");
+package_extract_file("dtbo-A3460-verified.img", "/dev/block/by-name/dtbo");
+
+else
+
+abort("Unsupported bootloader installed.");
+
+# --- End A3460 ---
+endif;
+
+# --- End A346N ---
+endif;
+
+# --- End A346M ---
+endif;
+
+# --- End A346E ---
+endif;
+
+# --- End A346B ---
+endif;
+
+# --- End patching firmware partitions ---

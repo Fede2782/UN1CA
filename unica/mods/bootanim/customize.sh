@@ -1,5 +1,5 @@
 # 1080x2340 devices
-TWOTHREE_TARGETS="dm1q dm2q g0q r0q"
+TWOTHREE_TARGETS="a34x dm1q dm2q g0q r0q"
 # 1080x2400 devices
 TWOFOUR_TARGETS="a52q a52xq a52sxq a71 a72q a73xq m52xq r8q r9q r9q2"
 
