@@ -492,6 +492,11 @@ SIGN_IMAGE_WITH_AVB()
         PARTITION_NAME="$(basename "$FILE")"
         PARTITION_NAME="${PARTITION_NAME//.img/}"
 
+        if [[ "$PARTITION_NAME" == *"-verified" ]] && [[ "$TARGET_OS_SINGLE_SYSTEM_IMAGE" == "mssi" ]]; then
+            LOG "- $PARTITION_NAME is a protected partition. Skipping AVB signing"
+            return 0
+        fi
+
         local PARTITION_SIZE
         PARTITION_SIZE="TARGET_$(tr "[:lower:]" "[:upper:]" <<< "$PARTITION_NAME")_PARTITION_SIZE"
         _CHECK_NON_EMPTY_PARAM "$PARTITION_SIZE" "${!PARTITION_SIZE//none/}" || exit 1
@@ -562,6 +567,18 @@ if [ -d "$WORK_DIR/kernel" ]; then
 
         LOG_STEP_OUT
     done < <(find "$WORK_DIR/kernel" -maxdepth 1 -type f -name "*.img")
+fi
+
+if [ -d "$WORK_DIR/kernel" ]; then
+    while IFS= read -r f; do
+        DIR="$(basename $f)"
+
+        LOG_STEP_IN "- Copying $DIR folder"
+
+        cp -a "$WORK_DIR/kernel/$DIR" "$TMP_DIR/$DIR"
+
+        LOG_STEP_OUT
+    done < <(find "$WORK_DIR/kernel" -mindepth 1 -maxdepth 1 -type d)
 fi
 
 LOG "- Generating updater-script"

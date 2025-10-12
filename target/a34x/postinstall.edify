@@ -1,0 +1,114 @@
+
+# --- Start patching firmware partitions ---
+
+if getprop("ro.boot.bootloader") == "A346BXXSBDYI1" then
+
+ui_print("Detected A346BXXSBDYI1 bootloader installed. Proceeding with installation");
+# Camera Video Processing Unit
+ui_print("Full Patching cam_vpu1-verified.img img...");
+package_extract_file("A346B/cam_vpu1-verified.img", "/dev/block/by-name/cam_vpu1");
+
+ui_print("Full Patching cam_vpu2-verified.img img...");
+package_extract_file("A346B/cam_vpu2-verified.img", "/dev/block/by-name/cam_vpu2");
+
+ui_print("Full Patching cam_vpu3-verified.img img...");
+package_extract_file("A346B/cam_vpu3-verified.img", "/dev/block/by-name/cam_vpu3");
+
+# Open BOTA
+assert(mark_header_bt("/dev/block/by-name/bota", 0, 0, "000"));
+
+# Audio Digital Signal Processing
+ui_print("Write audio_dsp-verified.img to /dev/block/by-name/bota");
+assert(write_data_bt("A346B/audio_dsp-verified.img", "/dev/block/by-name/bota", 8, 5825616));
+
+# Voice Wakeup
+ui_print("Write scp-verified.img to /dev/block/by-name/bota");
+assert(write_data_bt("A346B/scp-verified.img", "/dev/block/by-name/bota", 5825660, 882800));
+
+# DTBO
+ui_print("Write dtbo.img to /dev/block/by-name/bota");
+assert(write_data_bt("A346B/dtbo.img", "/dev/block/by-name/bota", 6708496, 228624));
+
+# Close BOTA
+assert(mark_header_bt("/dev/block/by-name/bota", 0, 3, 3142939818));
+
+else
+
+if (getprop("ro.boot.bootloader") == "A346EXXSADYG1" || getprop("ro.boot.bootloader") == "A346EXXSADYH1") then
+
+ui_print("Detected A346EXXSADYH1 or A346EXXSADYG1 bootloader installed. Proceeding with installation");
+# Camera Video Processing Unit
+ui_print("Full Patching cam_vpu1-verified.img img...");
+package_extract_file("A346E/cam_vpu1-verified.img", "/dev/block/by-name/cam_vpu1");
+
+ui_print("Full Patching cam_vpu2-verified.img img...");
+package_extract_file("A346E/cam_vpu2-verified.img", "/dev/block/by-name/cam_vpu2");
+
+ui_print("Full Patching cam_vpu3-verified.img img...");
+package_extract_file("A346E/cam_vpu3-verified.img", "/dev/block/by-name/cam_vpu3");
+
+# Open BOTA
+assert(mark_header_bt("/dev/block/by-name/bota", 0, 0, "000"));
+
+# Audio Digital Signal Processing
+ui_print("Write audio_dsp-verified.img to /dev/block/by-name/bota");
+assert(write_data_bt("A346E/audio_dsp-verified.img", "/dev/block/by-name/bota", 8, 5825616));
+
+# Voice Wakeup
+ui_print("Write scp-verified.img to /dev/block/by-name/bota");
+assert(write_data_bt("A346E/scp-verified.img", "/dev/block/by-name/bota", 5825660, 882800));
+
+# DTBO
+ui_print("Write dtbo.img to /dev/block/by-name/bota");
+assert(write_data_bt("A346E/dtbo.img", "/dev/block/by-name/bota", 6708496, 228624));
+
+# Close BOTA
+assert(mark_header_bt("/dev/block/by-name/bota", 0, 3, 3142939818));
+
+else
+
+if getprop("ro.boot.bootloader") == "A346MUBSBDYI1" then
+
+ui_print("Detected A346MUBSBDYI1 bootloader installed. Proceeding with installation");
+# Camera Video Processing Unit
+ui_print("Full Patching cam_vpu1-verified.img img...");
+package_extract_file("A346M/cam_vpu1-verified.img", "/dev/block/by-name/cam_vpu1");
+
+ui_print("Full Patching cam_vpu2-verified.img img...");
+package_extract_file("A346M/cam_vpu2-verified.img", "/dev/block/by-name/cam_vpu2");
+
+ui_print("Full Patching cam_vpu3-verified.img img...");
+package_extract_file("A346M/cam_vpu3-verified.img", "/dev/block/by-name/cam_vpu3");
+
+# Open BOTA
+assert(mark_header_bt("/dev/block/by-name/bota", 0, 0, "000"));
+
+# Audio Digital Signal Processing
+ui_print("Write audio_dsp-verified.img to /dev/block/by-name/bota");
+assert(write_data_bt("A346M/audio_dsp-verified.img", "/dev/block/by-name/bota", 8, 5825616));
+
+# Voice Wakeup
+ui_print("Write scp-verified.img to /dev/block/by-name/bota");
+assert(write_data_bt("A346M/scp-verified.img", "/dev/block/by-name/bota", 5825660, 882800));
+
+# DTBO
+ui_print("Write dtbo.img to /dev/block/by-name/bota");
+assert(write_data_bt("A346M/dtbo.img", "/dev/block/by-name/bota", 6708496, 228624));
+
+# Close BOTA
+assert(mark_header_bt("/dev/block/by-name/bota", 0, 3, 3142939818));
+
+else
+
+abort("Unsupported bootloader installed.");
+
+# --- End A346M ---
+endif;
+
+# --- End A346E ---
+endif;
+
+# --- End A346B ---
+endif;
+
+# --- End patching firmware partitions ---
