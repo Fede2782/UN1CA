@@ -492,6 +492,11 @@ SIGN_IMAGE_WITH_AVB()
         PARTITION_NAME="$(basename "$FILE")"
         PARTITION_NAME="${PARTITION_NAME//.img/}"
 
+        if [[ "$PARTITION_NAME" == *"-verified" ]] && [[ "$TARGET_OS_SINGLE_SYSTEM_IMAGE" == "mssi" ]]; then
+            LOG "- $PARTITION_NAME is a protected partition. Skipping AVB signing"
+            return 0
+        fi
+
         local PARTITION_SIZE
         PARTITION_SIZE="TARGET_$(tr "[:lower:]" "[:upper:]" <<< "$PARTITION_NAME")_PARTITION_SIZE"
         _CHECK_NON_EMPTY_PARAM "$PARTITION_SIZE" "${!PARTITION_SIZE//none/}" || exit 1
