@@ -1,0 +1,4 @@
+id=firmware
+name=Device firmware update
+author=Fede2782
+description=Update device firmware to fix camera, bluetooth and audio.
