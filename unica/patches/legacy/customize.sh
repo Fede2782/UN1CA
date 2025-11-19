@@ -1,3 +1,8 @@
+if [[ "$SOURCE_PLATFORM_SDK_VERSION" == "$TARGET_PLATFORM_SDK_VERSION" ]]; then
+    LOG "\033[0;33m! Nothing to do\033[0m"
+    return 0
+fi
+
 # [
 BACKPORT_SF_PROPS()
 {
@@ -12,8 +17,6 @@ BACKPORT_SF_PROPS()
     local VALUE
 
     if [ "$TARGET_PLATFORM_SDK_VERSION" -lt "34" ]; then
-        PATCHED=true
-
         PROP="ro.surface_flinger.enable_frame_rate_override"
         VALUE="$(test "$TARGET_LCD_CONFIG_HFR_MODE" -gt "1" && echo "true" || echo "false")"
 
@@ -24,8 +27,6 @@ BACKPORT_SF_PROPS()
     fi
 
     if [ "$TARGET_PLATFORM_SDK_VERSION" -lt "35" ]; then
-        PATCHED=true
-
         PROP="ro.surface_flinger.set_display_power_timer_ms"
 
         if [ "$(GET_PROP "vendor" "$PROP")" ]; then
@@ -65,8 +66,6 @@ BACKPORT_SF_PROPS()
 }
 # ]
 
-PATCHED=false
-
 # Pre-API 34
 # - Add ro.surface_flinger.enable_frame_rate_override if missing
 #
@@ -79,7 +78,6 @@ BACKPORT_SF_PROPS
 # Support legacy Face HAL (pre-API 34)
 if [ "$TARGET_PLATFORM_SDK_VERSION" -lt "34" ]; then
     if [ ! -f "$WORK_DIR/vendor/bin/hw/vendor.samsung.hardware.biometrics.face@3.0-service" ]; then
-        PATCHED=true
         APPLY_PATCH "system" "system/framework/services.jar" \
             "$MODPATH/face/services.jar/0001-Fallback-to-Face-HIDL-2.0.patch"
         SMALI_PATCH "system" "system/framework/services.jar" \
@@ -112,7 +110,6 @@ fi
 if [ "$TARGET_PLATFORM_SDK_VERSION" -lt "35" ]; then
     if [ -f "$WORK_DIR/vendor/bin/hw/vendor.samsung.hardware.light-service" ] && \
             ! xxd -p -c 4 "$WORK_DIR/vendor/bin/hw/vendor.samsung.hardware.light-service" | grep -q "1853$"; then
-        PATCHED=true
         APPLY_PATCH "system" "system/framework/services.jar" \
             "$MODPATH/lights/services.jar/0001-Backport-legacy-SehLights-HAL-code.patch"
     fi
@@ -124,7 +121,6 @@ if [ "$TARGET_PLATFORM_SDK_VERSION" -lt "36" ]; then
     if [ ! "$(GET_PROP "ro.telephony.sim_slots.count")" ] && \
             ! grep -q "ro.telephony.sim_slots.count" "$WORK_DIR/vendor/bin/secril_config_svc" && \
             ! grep -q -r "config_num_physical_slots" "$WORK_DIR/vendor/overlay"; then
-        PATCHED=true
         APPLY_PATCH "system" "system/framework/telephony-common.jar" \
             "$MODPATH/ril/telephony-common.jar/0001-Backport-legacy-UiccController-code.patch"
     fi
@@ -136,7 +132,6 @@ fi
 if [ "$TARGET_PLATFORM_SDK_VERSION" -lt "35" ] && \
         grep -q "SDFAT" "$WORK_DIR/kernel/boot.img" && \
         ! grep -q "bogus directory:" "$WORK_DIR/kernel/boot.img"; then
-    PATCHED=true
     # ",time_offset=%d" -> "NUL"
     HEX_PATCH "$WORK_DIR/system/system/bin/vold" "2c74696d655f6f66667365743d2564" "000000000000000000000000000000"
 fi
@@ -145,7 +140,6 @@ fi
 if [ "$TARGET_PLATFORM_SDK_VERSION" -lt "35" ]; then
     if [ "$(GET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_CAMERA_CONFIG_VENDOR_LIB_INFO")" ] && \
             [[ "$(GET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_CAMERA_CONFIG_VENDOR_LIB_INFO")" != *"image_codec.samsung"* ]]; then
-        PATCHED=true
         SET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_CAMERA_CONFIG_VENDOR_LIB_INFO" \
             "$(GET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_CAMERA_CONFIG_VENDOR_LIB_INFO"),image_codec.samsung.v1"
     fi
@@ -155,7 +149,6 @@ fi
 # - Check if target firmware runs on One UI 5.1.1 or above
 TARGET_FIRMWARE_PATH="$(cut -d "/" -f 1 -s <<< "$TARGET_FIRMWARE")_$(cut -d "/" -f 2 -s <<< "$TARGET_FIRMWARE")"
 if [ "$(GET_PROP "$FW_DIR/$TARGET_FIRMWARE_PATH/system/system/build.prop" "ro.build.version.oneui")" -lt "50101" ]; then
-    PATCHED=true
     DELETE_FROM_WORK_DIR "system" "system/bin/fabric_crypto"
     DELETE_FROM_WORK_DIR "system" "system/etc/init/fabric_crypto.rc"
     DELETE_FROM_WORK_DIR "system" "system/etc/permissions/FabricCryptoLib.xml"
@@ -174,7 +167,6 @@ fi
 # - 5.15.x and above: supported
 if [ -f "$WORK_DIR/system/system/priv-app/StorageShare/StorageShare.apk" ] && \
         ! grep -q "ksmbd" "$WORK_DIR/kernel/boot.img"; then
-    PATCHED=true
     DELETE_FROM_WORK_DIR "system" "system/bin/ksmbd.addshare"
     DELETE_FROM_WORK_DIR "system" "system/bin/ksmbd.adduser"
     DELETE_FROM_WORK_DIR "system" "system/bin/ksmbd.control"
@@ -192,7 +184,6 @@ fi
 TARGET_FIRMWARE_PATH="$(cut -d "/" -f 1 -s <<< "$TARGET_FIRMWARE")_$(cut -d "/" -f 2 -s <<< "$TARGET_FIRMWARE")"
 if [ -f "$WORK_DIR/system/system/bin/sbauth" ] && \
         [ ! -f "$FW_DIR/$TARGET_FIRMWARE_PATH/system/system/bin/sbauth" ]; then
-    PATCHED=true
     DELETE_FROM_WORK_DIR "system" "system/bin/sbauth"
     DELETE_FROM_WORK_DIR "system" "system/etc/init/sbauth.rc"
 fi
@@ -200,16 +191,11 @@ fi
 # Ensure PASS support (pre-API 35)
 if [ "$TARGET_PLATFORM_SDK_VERSION" -lt "35" ]; then
     if ! grep -q "sec_pass_data_file" "$WORK_DIR/vendor/etc/selinux/vendor_sepolicy.cil"; then
-        PATCHED=true
         SMALI_PATCH "system" "system/framework/services.jar" \
             "smali/com/android/server/StorageManagerService.smali" "return" \
             'isPassSupport()Z' 'false'
     fi
 fi
 
-if ! $PATCHED; then
-    LOG "\033[0;33m! Nothing to do\033[0m"
-fi
-
-unset PATCHED TARGET_FIRMWARE_PATH
+unset TARGET_FIRMWARE_PATH
 unset -f BACKPORT_SF_PROPS
