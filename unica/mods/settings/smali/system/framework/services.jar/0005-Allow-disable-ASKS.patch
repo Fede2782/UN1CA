@@ -1,4 +1,4 @@
-From 9dcdbbc15b05e0054b99ee2dbe419f34d80aab1a Mon Sep 17 00:00:00 2001
+From 28077a9d4676cde153a7b96daea8f3fc9038f7a7 Mon Sep 17 00:00:00 2001
 From: Salvo Giangreco <giangrecosalvo9@gmail.com>
 Date: Fri, 24 Oct 2025 16:07:43 +0200
 Subject: [PATCH] Allow disable ASKS
@@ -8,10 +8,10 @@ Subject: [PATCH] Allow disable ASKS
  1 file changed, 8 insertions(+), 12 deletions(-)
 
 diff --git a/smali/com/android/server/asks/ASKSManagerService.smali b/smali/com/android/server/asks/ASKSManagerService.smali
-index 5a0d7da1d..d76851993 100644
+index c8d0786d6..683b3628e 100644
 --- a/smali/com/android/server/asks/ASKSManagerService.smali
 +++ b/smali/com/android/server/asks/ASKSManagerService.smali
-@@ -6236,16 +6236,14 @@
+@@ -6478,16 +6478,14 @@
      move-object v6, v5
  
      :goto_0
@@ -30,7 +30,7 @@ index 5a0d7da1d..d76851993 100644
      invoke-virtual {v8, v7}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
  
      move-result v7
-@@ -23686,16 +23684,14 @@
+@@ -24135,16 +24133,14 @@
      invoke-static {v3, v0}, Landroid/util/Slog;->d(Ljava/lang/String;Ljava/lang/String;)I
  
      :cond_6
@@ -49,24 +49,24 @@ index 5a0d7da1d..d76851993 100644
      invoke-virtual {v2, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
  
      move-result v0
-@@ -25271,13 +25267,13 @@
+@@ -25959,13 +25955,13 @@
  
-     invoke-virtual {v1, v14}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+     invoke-virtual {v12, v9}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
  
--    const-string/jumbo v1, "ro.build.official.release"
-+    const-string/jumbo v1, "persist.sys.unica.asks"
+-    const-string/jumbo v9, "ro.build.official.release"
++    const-string/jumbo v9, "persist.sys.unica.asks"
  
--    invoke-static {v1}, Landroid/os/SystemProperties;->get(Ljava/lang/String;)Ljava/lang/String;
-+    const-string/jumbo v14, "true"
+-    invoke-static {v9}, Landroid/os/SystemProperties;->get(Ljava/lang/String;)Ljava/lang/String;
++    const-string/jumbo v12, "true"
  
--    move-result-object v1
-+    invoke-static {v1, v14}, Landroid/os/SystemProperties;->get(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+-    move-result-object v9
++    invoke-static {v9, v12}, Landroid/os/SystemProperties;->get(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
  
--    const-string/jumbo v14, "true"
-+    move-result-object v1
+-    const-string/jumbo v12, "true"
++    move-result-object v9
  
-     invoke-virtual {v14, v1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+     invoke-virtual {v12, v9}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
  
 -- 
-2.51.2
+2.51.1
 
