@@ -172,8 +172,10 @@ fi
 # - 4.19.x and below: unsupported
 # - 5.4.x-5.10.x: backport (https://github.com/namjaejeon/ksmbd.git)
 # - 5.15.x and above: supported
+TARGET_FIRMWARE_PATH="$(cut -d "/" -f 1 -s <<< "$TARGET_FIRMWARE")_$(cut -d "/" -f 2 -s <<< "$TARGET_FIRMWARE")"
 if [ -f "$WORK_DIR/system/system/priv-app/StorageShare/StorageShare.apk" ] && \
-        ! grep -q "ksmbd" "$WORK_DIR/kernel/boot.img"; then
+        ! grep -q "ksmbd" "$WORK_DIR/kernel/boot.img" && \
+        [ ! -f "$FW_DIR/$TARGET_FIRMWARE_PATH/system/system/priv-app/StorageShare/StorageShare.apk" ]; then
     PATCHED=true
     DELETE_FROM_WORK_DIR "system" "system/bin/ksmbd.addshare"
     DELETE_FROM_WORK_DIR "system" "system/bin/ksmbd.adduser"
@@ -189,7 +191,6 @@ if [ -f "$WORK_DIR/system/system/priv-app/StorageShare/StorageShare.apk" ] && \
 fi
 
 # Ensure sbauth support in target firmware
-TARGET_FIRMWARE_PATH="$(cut -d "/" -f 1 -s <<< "$TARGET_FIRMWARE")_$(cut -d "/" -f 2 -s <<< "$TARGET_FIRMWARE")"
 if [ -f "$WORK_DIR/system/system/bin/sbauth" ] && \
         [ ! -f "$FW_DIR/$TARGET_FIRMWARE_PATH/system/system/bin/sbauth" ]; then
     PATCHED=true
