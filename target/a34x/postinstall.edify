@@ -15,7 +15,7 @@ ui_print("Full Patching cam_vpu3-verified.img img...");
 package_extract_file("A346B/cam_vpu3-verified.img", "/dev/block/by-name/cam_vpu3");
 
 # Open BOTA
-assert(mark_header_bt("/dev/block/by-name/bota", 0, 0, "000"));
+assert(mark_header_bt("/dev/block/by-name/bota", 0, 0, 0));
 
 # Audio Digital Signal Processing
 ui_print("Write audio_dsp-verified.img to /dev/block/by-name/bota");
@@ -48,7 +48,7 @@ ui_print("Full Patching cam_vpu3-verified.img img...");
 package_extract_file("A346E/cam_vpu3-verified.img", "/dev/block/by-name/cam_vpu3");
 
 # Open BOTA
-assert(mark_header_bt("/dev/block/by-name/bota", 0, 0, "000"));
+assert(mark_header_bt("/dev/block/by-name/bota", 0, 0, 0));
 
 # Audio Digital Signal Processing
 ui_print("Write audio_dsp-verified.img to /dev/block/by-name/bota");
@@ -81,7 +81,7 @@ ui_print("Full Patching cam_vpu3-verified.img img...");
 package_extract_file("A346M/cam_vpu3-verified.img", "/dev/block/by-name/cam_vpu3");
 
 # Open BOTA
-assert(mark_header_bt("/dev/block/by-name/bota", 0, 0, "000"));
+assert(mark_header_bt("/dev/block/by-name/bota", 0, 0, 0));
 
 # Audio Digital Signal Processing
 ui_print("Write audio_dsp-verified.img to /dev/block/by-name/bota");
