@@ -566,6 +566,14 @@ if [ -d "$WORK_DIR/kernel" ]; then
     done < <(find "$WORK_DIR/kernel" -maxdepth 1 -type f -name "*.img")
 fi
 
+if [ -d "$WORK_DIR/firmware" ]; then
+    LOG_STEP_IN "- Copying firmware folder"
+
+    cp -a "$WORK_DIR/firmware" "$TMP_DIR/firmware"
+
+    LOG_STEP_OUT
+fi
+
 LOG "- Generating updater-script"
 GENERATE_UPDATER_SCRIPT
 
