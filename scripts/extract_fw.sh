@@ -217,7 +217,12 @@ PREPARE_SCRIPT()
 
     if ! $IGNORE_TARGET; then
         _CHECK_NON_EMPTY_PARAM "TARGET_FIRMWARE" "$TARGET_FIRMWARE" || exit 1
-        FIRMWARES+=("$TARGET_FIRMWARE")
+        if [[ "$TARGET_FIRMWARE_PACKAGE" != "none" ]]; then
+            _CHECK_NON_EMPTY_PARAM "TARGET_FIRMWARE_PACKAGE" "$TARGET_FIRMWARE_PACKAGE" || exit 1
+            FIRMWARE_PACKAGES=("$TARGET_FIRMWARE_PACKAGE")
+        else
+            FIRMWARES+=("$TARGET_FIRMWARE")
+        fi
         IFS=':' read -r -a TARGET_EXTRA_FIRMWARES <<< "$TARGET_EXTRA_FIRMWARES"
         if [ "${#TARGET_EXTRA_FIRMWARES[@]}" -ge 1 ]; then
             FIRMWARES+=("${TARGET_EXTRA_FIRMWARES[@]}")
@@ -398,6 +403,71 @@ for i in "${FIRMWARES[@]}"; do
     # Abort if firmware has not been downloaded
     if [ ! -f "$ODIN_DIR/${MODEL}_${CSC}/.downloaded" ]; then
         LOG "\033[0;31m! The firmware has not been downloaded\033[0m"
+        exit 1
+    fi
+
+    [ -f "$FW_DIR/${MODEL}_${CSC}/.extracted" ] && rm -rf "$FW_DIR/${MODEL}_${CSC}"
+    mkdir -p "$FW_DIR/${MODEL}_${CSC}"
+
+    DOWNLOADED_FIRMWARE="$(cat "$ODIN_DIR/${MODEL}_${CSC}/.downloaded")"
+
+    BL_TAR="$(find "$ODIN_DIR/${MODEL}_${CSC}" -name "BL_$(cut -d "/" -f 1 -s <<< "$DOWNLOADED_FIRMWARE")*.md5" | sort -r | head -n 1)"
+    AP_TAR="$(find "$ODIN_DIR/${MODEL}_${CSC}" -name "AP_$(cut -d "/" -f 1 -s <<< "$DOWNLOADED_FIRMWARE")*.md5" | sort -r | head -n 1)"
+
+    if [ ! "$BL_TAR" ]; then
+        LOG "\033[0;31m! No BL tar found\033[0m"
+        exit 1
+    elif [ ! "$AP_TAR" ]; then
+        LOG "\033[0;31m! No AP tar found\033[0m"
+        exit 1
+    fi
+
+    EXTRACT_KERNEL_BINARIES
+    EXTRACT_OS_PARTITIONS
+    EXTRACT_AVB_BINARIES
+
+    echo -n "$DOWNLOADED_FIRMWARE" > "$FW_DIR/${MODEL}_${CSC}/.extracted"
+
+    if [ -n "$GITHUB_ACTIONS" ]; then
+        rm -rf "$ODIN_DIR/${MODEL}_${CSC}"
+    fi
+
+    LOG_STEP_OUT; LOG_STEP_OUT
+done
+
+for i in "${FIRMWARE_PACKAGES[@]}"; do
+    PARSE_FIRMWARE_STRING "$TARGET_FIRMWARE" || exit 1
+    PARSE_FIRMWARE_PACKAGE_STRING "$i" || exit 1
+
+    LOG_STEP_IN "- Processing $MODEL firmware package with $CSC CSC"
+    LOG "- Downloaded firmware package: $(cat "$ODIN_DIR/${MODEL}_${CSC}/.downloaded" 2> /dev/null)"
+    LOG "- Extracted firmware package: $(cat "$FW_DIR/${MODEL}_${CSC}/.extracted" 2> /dev/null)"
+    LOG "- Latest available firmware package: $MD5"
+
+    LOG_STEP_IN
+
+    if ! $FORCE; then
+        # Skip if firmware has been extracted
+        if [ -f "$FW_DIR/${MODEL}_${CSC}/.extracted" ]; then
+            if [[ "$(cat "$FW_DIR/${MODEL}_${CSC}/.extracted")" != "$MD5" ]]; then
+                if [ -f "$ODIN_DIR/${MODEL}_${CSC}/.downloaded" ] && \
+                        [[ "$(cat "$FW_DIR/${MODEL}_${CSC}/.extracted")" != "$(cat "$ODIN_DIR/${MODEL}_${CSC}/.downloaded")" ]]; then
+                    LOG "\033[0;33m! A different firmware package has been downloaded, use --force flag if you want to overwrite it\033[0m"
+                else
+                    LOG "\033[0;33m! A different firmware package is available for download\033[0m"
+                fi
+            else
+                LOG "\033[0;33m! This firmware package has already been extracted\033[0m"
+            fi
+
+            LOG_STEP_OUT; LOG_STEP_OUT
+            continue
+        fi
+    fi
+
+    # Abort if firmware has not been downloaded
+    if [ ! -f "$ODIN_DIR/${MODEL}_${CSC}/.downloaded" ]; then
+        LOG "\033[0;31m! The firmware package has not been downloaded\033[0m"
         exit 1
     fi
 

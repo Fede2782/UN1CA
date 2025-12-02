@@ -166,6 +166,38 @@ PARSE_FIRMWARE_STRING()
     return 0
 }
 
+# PARSE_FIRMWARE_PACKAGE_STRING <string>
+# Parses the supplied string and stores each value in URL/MD5 variables.
+# - The supplied string must be in the following format: <URL>/<MD5>
+PARSE_FIRMWARE_PACKAGE_STRING()
+{
+    local STRING="$1"
+
+    if [ ! "$STRING" ]; then
+        LOGE "Firmware packag value cannot be empty"
+        return 1
+    fi
+
+    # remove everything after the last "/" included
+    URL="${STRING%/*}"
+    if [ ! "$URL" ]; then
+        LOGE "No device model value found in \"$STRING\""
+        return 1
+    fi
+
+    # remove everything before the last "/" included
+    MD5="${STRING##*/}"
+    if [ ! "$MD5" ]; then
+        LOGE "No MD5 value found in \"$STRING\""
+        return 1
+    elif [[ "${#MD5}" != "32" ]]; then
+        LOGE "MD5 not valid in \"$STRING\": $MD5"
+        return 1
+    fi
+
+    return 0
+}
+
 # UNSPARSE_IMAGE <file> [output]
 # Unsparse the supplied file, a different output path can be provided optionally.
 UNSPARSE_IMAGE()

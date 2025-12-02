@@ -65,7 +65,12 @@ PREPARE_SCRIPT()
 
     if ! $IGNORE_TARGET; then
         _CHECK_NON_EMPTY_PARAM "TARGET_FIRMWARE" "$TARGET_FIRMWARE" || exit 1
-        FIRMWARES+=("$TARGET_FIRMWARE")
+        if [[ "$TARGET_FIRMWARE_PACKAGE" != "none" ]]; then
+            _CHECK_NON_EMPTY_PARAM "TARGET_FIRMWARE_PACKAGE" "$TARGET_FIRMWARE_PACKAGE" || exit 1
+            FIRMWARE_PACKAGES=("$TARGET_FIRMWARE_PACKAGE")
+        else
+            FIRMWARES+=("$TARGET_FIRMWARE")
+        fi
         IFS=':' read -r -a TARGET_EXTRA_FIRMWARES <<< "$TARGET_EXTRA_FIRMWARES"
         if [ "${#TARGET_EXTRA_FIRMWARES[@]}" -ge 1 ]; then
             FIRMWARES+=("${TARGET_EXTRA_FIRMWARES[@]}")
@@ -184,6 +189,78 @@ for i in "${FIRMWARES[@]}"; do
     VERIFY_ODIN_PACKAGES
 
     echo -n "$LATEST_FIRMWARE" > "$ODIN_DIR/${MODEL}_${CSC}/.downloaded"
+
+    LOG_STEP_OUT; LOG_STEP_OUT
+done
+
+for i in "${FIRMWARE_PACKAGES[@]}"; do
+    PARSE_FIRMWARE_STRING "$TARGET_FIRMWARE" || exit 1
+    PARSE_FIRMWARE_PACKAGE_STRING "$i" || exit 1
+
+    LOG_STEP_IN "- Processing $MODEL firmware package with $CSC CSC"
+    LOG "- Downloaded firmware package: $(cat "$ODIN_DIR/${MODEL}_${CSC}/.downloaded" 2> /dev/null)"
+    LOG "- Extracted firmware package: $(cat "$FW_DIR/${MODEL}_${CSC}/.extracted" 2> /dev/null)"
+    LOG "- Latest available firmware package: $MD5"
+
+    LOG_STEP_IN
+
+    if ! $FORCE; then
+        # Skip if firmware has been extracted and equal/newer than the one in MD5
+        if [ -f "$FW_DIR/${MODEL}_${CSC}/.extracted" ]; then
+            if [[ "$(cat "$FW_DIR/${MODEL}_${CSC}/.extracted")" == "$MD5" ]]; then
+                LOG "\033[0;33m! This firmware package has already been extracted, skipping\033[0m"
+                LOG_STEP_OUT; LOG_STEP_OUT
+                continue
+            fi
+        fi
+
+        # Skip if firmware has already been downloaded
+        if [ -f "$ODIN_DIR/${MODEL}_${CSC}/.downloaded" ]; then
+            if [[ "$(cat "$ODIN_DIR/${MODEL}_${CSC}/.downloaded")" != "$MD5" ]]; then
+                LOG "\033[0;33m! A different firmware package is available for download, use --force flag if you want to overwrite it\033[0m"
+            else
+                LOG "\033[0;33m! This firmware package has already been downloaded\033[0m"
+            fi
+            LOG_STEP_OUT; LOG_STEP_OUT
+            continue
+        fi
+    fi
+
+    LOG "- Downloading firmware package..."
+    [ -d "$ODIN_DIR/${MODEL}_${CSC}" ] && rm -rf "$ODIN_DIR/${MODEL}_${CSC}"
+    mkdir -p "$ODIN_DIR/${MODEL}_${CSC}"
+    DOWNLOAD_FILE "$URL" "$ODIN_DIR/${MODEL}_${CSC}/firmware.zip"
+
+    ZIP_FILE="$(find "$ODIN_DIR/${MODEL}_${CSC}" -name "*.zip" | sort -r | head -n 1)"
+    if [ ! "$ZIP_FILE" ] || [ ! -f "$ZIP_FILE" ]; then
+        LOG "\033[0;31m! Download failed\033[0m"
+        exit 1
+    fi
+
+    if [[ "$MD5" != "$(md5sum "$ODIN_DIR/${MODEL}_${CSC}/firmware.zip" | cut -d' ' -f 1)" ]]; then
+        LOG "\033[0;31m! Download failed. MD5 corrupted\033[0m"
+        exit 1
+    fi
+
+    LOG "- Extracting $(basename "$ZIP_FILE")..."
+    EVAL "unzip -o \"$ZIP_FILE\" -d \"$ODIN_DIR/${MODEL}_${CSC}\" && rm -rf \"$ZIP_FILE\"" || exit 1
+
+    (
+        cd "$ODIN_DIR/${MODEL}_${CSC}"
+        tar cf "BL_${MD5}.tar" vbmeta.img.lz4; rm vbmeta.img.lz4
+        tar cf "AP_${MD5}.tar" *.img.lz4; rm -f *.img.lz4
+        for i in AP BL; do
+            FILE_NAME="${i}_${MD5}"
+            CHECKSUM="$(md5sum "$FILE_NAME.tar" | cut -d " " -f 1 | sed 's/ //')"
+            echo -n "$CHECKSUM" >> "$FILE_NAME.tar" \
+                && echo "  $FILE_NAME.tar" >> "$FILE_NAME.tar" \
+                && mv "$FILE_NAME.tar" "$FILE_NAME.tar.md5"
+        done
+    )
+
+    VERIFY_ODIN_PACKAGES || exit 1
+
+    echo -n "$MD5" > "$ODIN_DIR/${MODEL}_${CSC}/.downloaded"
 
     LOG_STEP_OUT; LOG_STEP_OUT
 done

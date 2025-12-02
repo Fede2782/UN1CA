@@ -95,6 +95,23 @@ fi
 #   [SOURCE/TARGET]_FIRMWARE
 #     String containing the source/target device firmware to use in the format of "Model number/CSC/IMEI".
 #     IMEI number is necessary to fetch the firmware from FUS, alternatively the device serial number can be used.
+#     If TARGET_FIRMWARE_PACKAGE is set, TARGET_FIRMWARE will be downloaded from the package url instead of FUS.
+#
+#   TARGET_FIRMWARE_PACKAGE
+#      String containing an url to the target device firmwre package to use in format "Package url/MD5".
+#      Package url must be a valid .zip archive file which contains all partitions in .img format which
+#      are normally extracted from target firmware to produce the final image. Images MUST be compressed
+#      using lz4.
+#
+#      The following partitions MUST be present in the package zip if they are available in stock firmware:
+#        - odm odm_dlkm system_dlkm vendor vendor_dlkm
+#        - boot dtbo init_boot vendor_boot
+#        - vbmeta
+#
+#      Others can be included if strictly necessary but it is NOT recommended.
+#
+#      Example:
+#        - `TARGET_FIRMWARE_PACKAGE="https://this.is/an/example.zip/bc4d8b830be63bcad489d4f070aa0adf"`
 #
 #   [SOURCE/TARGET]_EXTRA_FIRMWARES
 #     If defined, this set of extra devices firmwares will be downloaded/extracted when running `download_fw`/`extract_fw`
@@ -445,6 +462,7 @@ fi
         echo "TARGET_ASSERT_MODEL=\"\""
     fi
     GET_BUILD_VAR "TARGET_FIRMWARE"
+    GET_BUILD_VAR "TARGET_FIRMWARE_PACKAGE" "none"
     if [ "${#TARGET_EXTRA_FIRMWARES[@]}" -ge 1 ]; then
         echo "TARGET_EXTRA_FIRMWARES=\"$(IFS=":"; printf '%s' "${TARGET_EXTRA_FIRMWARES[*]}")\""
     else
