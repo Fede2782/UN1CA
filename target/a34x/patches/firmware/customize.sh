@@ -1,8 +1,14 @@
 A346B_FIRMWARE_URL="https://github.com/UN1CA/proprietary_vendor_samsung_a34x/releases/download/EYI7-firmware/A346BXXUBEYI7_mtk_fw.tar.md5"
 A346E_FIRMWARE_URL="https://github.com/UN1CA/proprietary_vendor_samsung_a34x/releases/download/EYI7-firmware/A346EXXUAEYI7_mtk_fw.tar.md5"
 A346M_FIRMWARE_URL="https://github.com/UN1CA/proprietary_vendor_samsung_a34x/releases/download/EYI7-firmware/A346MUBUBEYI7_mtk_fw.tar.md5"
+A3460_FIRMWARE_URL="https://github.com/UN1CA/proprietary_vendor_samsung_a34x/releases/download/EYI7-firmware/A3460ZHUAEYI7_mtk_fw.tar.md5"
+A346N_FIRMWARE_URL="https://github.com/UN1CA/proprietary_vendor_samsung_a34x/releases/download/EYI7-firmware/A346NKSSAEYI8_mtk_fw.tar.md5"
 
-for f in A346B A346E A346M; do
+if [ -d "$WORK_DIR/firmware" ]; then
+    EVAL "rm -rf \"$WORK_DIR/firmware\""
+fi
+
+for f in A346B A346E A346M A3460 A346N; do
     LOG "- Downloading firmware package for $f"
 
     var="${f}_FIRMWARE_URL"
