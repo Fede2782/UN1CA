@@ -15,3 +15,32 @@ rezetprop -n ro.boot.veritymode "enforcing"
 rezetprop -n ro.vendor.boot.warranty_bit "0"
 rezetprop -n ro.vendor.build.security_patch "$(getprop ro.build.version.security_patch)"
 rezetprop -n sys.oem_unlock_allowed "0"
+
+DEVICE="$(getprop ro.product.vendor.device)"
+
+if [ "$DEVICE" == "a34x" ]; then
+    BOOT_EM_MODEL="$(getprop ro.boot.em.model)"
+
+    rezetprop -n  "ro.product.manufacturer_for_attestation" "samsung"
+    rezetprop -n "ro.product.brand_for_attestation" "samsung"
+    rezetprop -n "ro.product.device_for_attestation" "a34x"
+    rezetprop -n "ro.product.model_for_attestation" "$BOOT_EM_MODEL"
+    rezetprop -n "ro.product.name_for_attestation" "a34xxx"
+
+    if [ "$BOOT_EM_MODEL" == "SM-A346E" ]; then
+        rezetprop -n "ro.product.name_for_attestation" "a34xdxx"
+    fi
+
+    if [ "$BOOT_EM_MODEL" == "SM-A346M" ]; then
+        rezetprop -n "ro.product.name_for_attestation" "a34xub"
+    fi
+
+    if [ "$BOOT_EM_MODEL" == "SM-A346N" ]; then
+        rezetprop -n "ro.product.name_for_attestation" "a34xks"
+    fi
+
+    if [ "$BOOT_EM_MODEL" == "SM-A3460" ]; then
+        rezetprop -n "ro.product.name_for_attestation" "a34xzh"
+    fi
+fi
+
