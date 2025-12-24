@@ -3,7 +3,3 @@ bluetooth.profile.asha.central.enabled=false
 
 # FRP
 ro.frp.pst=/dev/block/by-name/persistent
-
-# RKP
-remote_provisioning.hostname=remoteprovisioning.googleapis.com
-remote_provisioning.connect_timeout_millis=2000
