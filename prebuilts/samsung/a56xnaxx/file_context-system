@@ -11,6 +11,8 @@
 /system/lib64/libcontextanalyzer_jni\.media\.samsung\.so u:object_r:system_lib_file:s0
 /system/lib64/libmediacontextanalyzer\.so u:object_r:system_lib_file:s0
 /system/lib64/libvideo-highlight-arm64-v8a\.so u:object_r:system_lib_file:s0
+/system/lib64/libpic_best\.arcsoft\.so u:object_r:system_lib_file:s0
+/system/lib64/libface_recognition\.arcsoft\.so u:object_r:system_lib_file:s0
 /system/media u:object_r:system_file:s0
 /system/media/audio u:object_r:system_file:s0
 /system/media/audio/notifications u:object_r:system_file:s0
