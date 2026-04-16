@@ -1,0 +1,8 @@
+
+# --- Wiping cache ---
+
+ifelse(is_mounted("/cache"), unmount("/cache"));
+ui_print("Wiping cache...");
+format("ext4", "EMMC", "/dev/block/by-name/cache", "0", "/cache");
+mount("ext4", "EMMC", "/dev/block/by-name/cache", "/cache");
+ui_print(" ");
