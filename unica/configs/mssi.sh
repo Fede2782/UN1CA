@@ -6,6 +6,6 @@
 # Inherit source firmware configuration from essi
 source "$SRC_DIR/unica/configs/essi.sh" || return 1
 
-# Galaxy A34 5G (One UI 8.0)
-SOURCE_EXTRA_FIRMWARES=("SM-A346B/EUX/351648441234565")
+# Galaxy A32 4G (One UI 5.1)
+SOURCE_EXTRA_FIRMWARES=()
 SOURCE_SUPER_GROUP_NAME="main"
