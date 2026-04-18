@@ -58,9 +58,7 @@ system/app/MoccaMobile
 system/app/ParentalCare
 system/app/PhotoTable
 system/app/PlayAutoInstallConfig
-system/app/SamsungCalendar
 system/app/SamsungPassAutofill_v1
-system/app/SamsungTTS
 system/app/SamsungTTSVoice_en_US_f00
 system/app/SamsungTTSVoice_ru_RU_f00
 system/app/SamsungTTSVoice_vi_VN_f00
@@ -105,7 +103,6 @@ system/priv-app/SamsungCalendarProvider
 system/priv-app/SamsungMessages
 system/priv-app/SamsungPass
 system/priv-app/SamsungPositioning
-system/priv-app/SamsungSmartSuggestions
 system/priv-app/SetupIndiaServicesTnC
 system/priv-app/SingleTakeService
 system/priv-app/SmartThingsKit
