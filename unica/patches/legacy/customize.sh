@@ -235,15 +235,15 @@ fi
 # Ensure Sem eBPF Smart Hotspot functionality (pre-API 35)
 # - Check for TARGET_PLATFORM_SDK_VERSION < 35 as 4.14 kernel support has been deprecated in Android V
 # - Disable "ro.kernel.version" == "4.14" leftover checks, 4.14 needs eBPF kernel backports anyway
-if [ "$TARGET_PLATFORM_SDK_VERSION" -lt "35" ]; then
-    EXTRACT_KERNEL_IMAGE
-    if grep -q "Linux version 4.14" "$TMP_DIR/out/kernel"; then
-        PATCHED=true
-        # [b.eq #0xXXXXXX] -> [nop]
-        HEX_PATCH "$WORK_DIR/system/system/bin/netd" "e001005480feff90" "1f2003d580feff90"
-        HEX_PATCH "$WORK_DIR/system/system/bin/netd" "2001005480feff90" "1f2003d580feff90"
-    fi
-fi
+#if [ "$TARGET_PLATFORM_SDK_VERSION" -lt "35" ]; then
+#    EXTRACT_KERNEL_IMAGE
+#    if grep -q "Linux version 4.14" "$TMP_DIR/out/kernel"; then
+#        PATCHED=true
+#        # [b.eq #0xXXXXXX] -> [nop]
+#        HEX_PATCH "$WORK_DIR/system/system/bin/netd" "e001005480feff90" "1f2003d580feff90"
+#        HEX_PATCH "$WORK_DIR/system/system/bin/netd" "2001005480feff90" "1f2003d580feff90"
+#    fi
+#fi
 
 # Ensure sbauth support in target firmware
 TARGET_FIRMWARE_PATH="$(cut -d "/" -f 1 -s <<< "$TARGET_FIRMWARE")_$(cut -d "/" -f 2 -s <<< "$TARGET_FIRMWARE")"
