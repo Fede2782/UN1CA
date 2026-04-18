@@ -31,10 +31,6 @@ while IFS= read -r f; do
                 ! grep -q -w "config_Extra_Brightness_Display_Solution_Brightness_Value" "$SRC_DIR/target/$TARGET_CODENAME/overlay/values/arrays.xml" 2> /dev/null; then
             _LOG "SEC_FLOATING_FEATURE_LCD_SUPPORT_EXTRA_BRIGHTNESS is set but \"config_Extra_Brightness_Display_Solution_Brightness_Value\" is missing in arrays.xml"
         fi
-        if [[ "$(GET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_FRAMEWORK_CONFIG_AOD_ITEM")" =~ activeclock|clocktransition ]] && \
-                ! grep -q -w "physical_power_button_center_screen_location_y" "$SRC_DIR/target/$TARGET_CODENAME/overlay/values/dimens.xml" 2> /dev/null; then
-            _LOG "AOD Clock Transition is enabled but \"physical_power_button_center_screen_location_y\" is missing in dimens.xml"
-        fi
         LOG_STEP_OUT
     elif [[ "$f" == "SystemUI"* ]]; then
         EVAL "rm -f \"$APKTOOL_DIR/product/overlay/${f//$SOURCE_PRODUCT_NAME/$TARGET_PRODUCT_NAME}/res/values/public.xml\""
