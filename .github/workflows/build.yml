@@ -48,7 +48,9 @@ jobs:
           DEBIAN_FRONTEND=noninteractive sudo apt install -yq \
             7zip attr ccache clang ffmpeg \
             libbrotli-dev libgtest-dev libprotobuf-dev libunwind-dev libpcre2-dev \
+            python3 python3-pip \
             libzstd-dev linux-modules-extra-$(uname -r) lld protobuf-compiler webp
+          pip3 install -q liblp tgcrypto huggingface_hub hf_xet
           sudo modprobe erofs f2fs
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -81,3 +83,11 @@ jobs:
         run: |
           source ./buildenv.sh ${{ matrix.target }}
           ./scripts/make_rom.sh
+
+      - name: Upload ROM to Hugging Face
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_XET_HIGH_PERFORMANCE: "1"
+        run: |
+          DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          hf buckets sync ./out hf://buckets/Zears14/lumifiles/out/$DATE/ --include "UN1CA*.zip"
