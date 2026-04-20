@@ -90,4 +90,6 @@ jobs:
           HF_XET_HIGH_PERFORMANCE: "1"
         run: |
           DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ)
-          hf buckets sync ./out hf://buckets/Zears14/lumifiles/out/$DATE/ --include "UN1CA*.zip"
+          hf buckets sync ./out hf://buckets/Zears14/lumifiles/out/$DATE/ \
+            --exclude "*" \
+            --include "UN1CA*.zip"
