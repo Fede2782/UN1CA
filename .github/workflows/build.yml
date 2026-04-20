@@ -90,7 +90,7 @@ jobs:
           HF_XET_HIGH_PERFORMANCE: "1"
         run: |
           DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ)
-          ROM_FILE=$(ls ./out/UN1CA*.zip | head -n 1)
+          ROM_FILE=$(ls ./out/UN1CA* | head -n 1)
           if [ -f "$ROM_FILE" ]; then
             echo "Uploading: $ROM_FILE"
             hf transfer upload "$ROM_FILE" hf://buckets/Zears14/lumifiles/out/$DATE/
