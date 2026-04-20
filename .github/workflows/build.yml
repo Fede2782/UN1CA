@@ -90,6 +90,11 @@ jobs:
           HF_XET_HIGH_PERFORMANCE: "1"
         run: |
           DATE=$(date -u +%Y-%m-%dT%H:%M:%SZ)
-          hf buckets sync ./out hf://buckets/Zears14/lumifiles/out/$DATE/ \
-            --exclude "*" \
-            --include "UN1CA*.zip"
+          ROM_FILE=$(ls ./out/UN1CA*.zip | head -n 1)
+          if [ -f "$ROM_FILE" ]; then
+            echo "Uploading: $ROM_FILE"
+            hf transfer upload "$ROM_FILE" hf://buckets/Zears14/lumifiles/out/$DATE/
+          else
+            echo "Rom zip hasn't been found."
+            exit 1
+          fi
