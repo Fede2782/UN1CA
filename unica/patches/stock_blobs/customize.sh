@@ -91,6 +91,8 @@ if [[ "$(GET_FLOATING_FEATURE_CONFIG "$FW_DIR/$TARGET_FIRMWARE_PATH/system/syste
     LOG_STEP_OUT
 fi
 
+
+
 if [[ "$(GET_FLOATING_FEATURE_CONFIG "$FW_DIR/$TARGET_FIRMWARE_PATH/system/system/etc/floating_feature.xml" "SEC_FLOATING_FEATURE_GALLERY_CONFIG_IMAGE_TAGGER_VERSION")" != "V901" ]] && \
         [[ "$(GET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_GALLERY_CONFIG_IMAGE_TAGGER_VERSION")" == "V901" ]]; then
     LOG_STEP_IN "- Adding Image Tagger V901 blobs"
@@ -133,6 +135,17 @@ fi
 
 if [ ! -d "$WORK_DIR/vendor/etc/saiv/image_understanding/db/hs_segmenter" ]; then
     ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "vendor" "etc/saiv/image_understanding/db/hs_segmenter"
+fi
+
+if [ "$(GET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_CAMERA_CONFIG_ACTION_CLASSIFIER")" ] && \
+       [ ! -d "$WORK_DIR/vendor/etc/singletake/dynamic_viewing" ];
+    ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "vendor" "vendor/etc/singletake/dynamic_viewing"
+fi
+
+if grep -q "SUPPORT_AI_FILTER.*true" "$WORK_DIR/system/system/cameradata/singletake/service-feature.xml" 2> /dev/null && \
+       grep -q "SUPPORT_SMART_CROP.*true" "$WORK_DIR/system/system/cameradata/singletake/service-feature.xml" 2> /dev/null && \
+       [ ! -d "$WORK_DIR/vendor/etc/singletake/SmartCrop" ]; then
+    ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "vendor" "vendor/etc/singletake/SmartCrop"
 fi
 
 DELETE_FROM_WORK_DIR "system" "system/saiv/textrecognition"
