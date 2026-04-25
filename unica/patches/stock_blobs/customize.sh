@@ -82,6 +82,72 @@ else
         DELETE_FROM_WORK_DIR "vendor" "saiv/image_understanding/db/smartscan_rectifier"
     fi
 fi
+
+if [[ "$(GET_FLOATING_FEATURE_CONFIG "$FW_DIR/$TARGET_FIRMWARE_PATH/system/system/etc/floating_feature.xml" "SEC_FLOATING_FEATURE_GALLERY_CONFIG_PET_CLUSTER_VERSION")" == "None" ]] && \
+        [[ "$(GET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_GALLERY_CONFIG_PET_CLUSTER_VERSION")" == "V1001" ]]; then
+    LOG_STEP_IN "- Adding Pet Cluster V1001 blobs"
+    ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "vendor" "saiv/image_understanding/db/pet_detector"
+    ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "vendor" "saiv/image_understanding/db/pet_mypetsearch"
+    LOG_STEP_OUT
+fi
+
+
+
+if [[ "$(GET_FLOATING_FEATURE_CONFIG "$FW_DIR/$TARGET_FIRMWARE_PATH/system/system/etc/floating_feature.xml" "SEC_FLOATING_FEATURE_GALLERY_CONFIG_IMAGE_TAGGER_VERSION")" != "V901" ]] && \
+        [[ "$(GET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_GALLERY_CONFIG_IMAGE_TAGGER_VERSION")" == "V901" ]]; then
+    LOG_STEP_IN "- Adding Image Tagger V901 blobs"
+    ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "vendor" "saiv/image_understanding/db/aig_document_detector"
+    ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "vendor" "saiv/image_understanding/db/aig_document_classifier"
+    DELETE_FROM_WORK_DIR "vendor" "saiv/image_understanding/db/aig_classifier"
+    ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "vendor" "saiv/image_understanding/db/aig_classifier"
+    ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "system" "system/saiv/aig"
+    LOG_STEP_OUT
+fi
+
+if [[ "$(GET_FLOATING_FEATURE_CONFIG "$FW_DIR/$TARGET_FIRMWARE_PATH/system/system/etc/floating_feature.xml" "SEC_FLOATING_FEATURE_GALLERY_CONFIG_FACE_CLUSTER_VERSION")" != "SRCB_V5" ]] && \
+        [[ "$(GET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_GALLERY_CONFIG_FACE_CLUSTER_VERSION")" == "SRCB_V5" ]]; then
+    LOG_STEP_IN "- Adding Face Cluster V5 blobs"
+    DELETE_FROM_WORK_DIR "system" "system/saiv/face/cluster_pb"
+    ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "system" "system/saiv/face/cluster_pb"
+    LOG_STEP_OUT
+fi
+
+if [ -f "$WORK_DIR/system/system/lib64/libSceneDetector_v1.camera.samsung.so" ] && \
+        [ ! -d "$WORK_DIR/vendor/etc/saiv/image_understanding/db/aic_classifier" ]; then
+    ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "system" "system/saiv/image_understanding/db/aic_classifier"
+    ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "vendor" "etc/saiv/image_understanding/db/aic_classifier"
+    ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "system" "system/saiv/image_understanding/db/aic_detector"
+    ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "vendor" "etc/saiv/image_understanding/db/aic_detector"
+fi
+
+if [ -f "$WORK_DIR/system/system/lib64/libObjectDetector_v1.camera.samsung.so" ] && \
+        [ ! -d "$WORK_DIR/vendor/etc/saiv/image_understanding/db/aic_g_o_detector" ]; then
+    ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "system" "system/saiv/image_understanding/db/aic_g_o_detector"
+    ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "vendor" "etc/saiv/image_understanding/db/aic_g_o_detector"
+fi
+
+if [ ! -d "$WORK_DIR/vendor/etc/saiv/image_understanding/db/slens_detector" ]; then
+    ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "system" "system/saiv/image_understanding/db/slens_detector"
+    ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "vendor" "etc/saiv/image_understanding/db/slens_detector"
+    ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "system" "system/saiv/image_understanding/db/slens_classifier"
+    ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "vendor" "etc/saiv/image_understanding/db/slens_classifier"
+fi
+
+if [ ! -d "$WORK_DIR/vendor/etc/saiv/image_understanding/db/hs_segmenter" ]; then
+    ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "vendor" "etc/saiv/image_understanding/db/hs_segmenter"
+fi
+
+if [ "$(GET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_CAMERA_CONFIG_ACTION_CLASSIFIER")" ] && \
+       [ ! -d "$WORK_DIR/vendor/etc/singletake/dynamic_viewing" ];
+    ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "vendor" "vendor/etc/singletake/dynamic_viewing"
+fi
+
+if grep -q "SUPPORT_AI_FILTER.*true" "$WORK_DIR/system/system/cameradata/singletake/service-feature.xml" 2> /dev/null && \
+       grep -q "SUPPORT_SMART_CROP.*true" "$WORK_DIR/system/system/cameradata/singletake/service-feature.xml" 2> /dev/null && \
+       [ ! -d "$WORK_DIR/vendor/etc/singletake/SmartCrop" ]; then
+    ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "vendor" "vendor/etc/singletake/SmartCrop"
+fi
+
 DELETE_FROM_WORK_DIR "system" "system/saiv/textrecognition"
 ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "system" "system/saiv/textrecognition" 0 0 755 "u:object_r:system_file:s0"
 
