@@ -213,6 +213,7 @@ DELETE_FROM_WORK_DIR "system" "system/lib64/libtensorflowlite_inference_api.myfi
 DELETE_FROM_WORK_DIR "system" "system/lib64/libdualcam_portraitlighting_gallery_360_lite.so"
 
 LIBS="
+system/lib64/libVideoClassifier.camera.samsung.so
 system/lib64/libImageTagger.camera.samsung.so
 system/lib64/libsaiv_HprFace_cmh_support_jni.camera.samsung.so
 system/lib64/libFace_Landmark_Engine.camera.samsung.so
@@ -267,7 +268,6 @@ for lib in $LIBS; do
 done
 
 LIBS="
-system/lib64/libVideoClassifier.camera.samsung.so
 system/lib64/libhybridHDR_wrapper.camera.samsung.so
 system/lib64/libhybrid_high_dynamic_range.arcsoft.so
 system/lib64/libSwIsp_core.camera.samsung.so
