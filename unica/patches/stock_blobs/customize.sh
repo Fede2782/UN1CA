@@ -94,13 +94,35 @@ fi
 if [[ "$(GET_FLOATING_FEATURE_CONFIG "$FW_DIR/$TARGET_FIRMWARE_PATH/system/system/etc/floating_feature.xml" "SEC_FLOATING_FEATURE_GALLERY_CONFIG_IMAGE_TAGGER_VERSION")" != "V901" ]] && \
         [[ "$(GET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_GALLERY_CONFIG_IMAGE_TAGGER_VERSION")" == "V901" ]]; then
     LOG_STEP_IN "- Adding Image Tagger V901 blobs"
+    if [ -d "$WORK_DIR/vendor/saiv/image_understanding/db/aig_document_detector" ]; then
+        DELETE_FROM_WORK_DIR "vendor" "saiv/image_understanding/db/aig_document_detector"
+    fi
     ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "vendor" "saiv/image_understanding/db/aig_document_detector" 0 2000 755 "u:object_r:vendor_snap_file:s0"
+    if [ -d "$WORK_DIR/vendor/saiv/image_understanding/db/aig_document_classifier" ]; then
+        DELETE_FROM_WORK_DIR "vendor" "saiv/image_understanding/db/aig_document_classifier"
+    fi
     ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "vendor" "saiv/image_understanding/db/aig_document_classifier" 0 2000 755 "u:object_r:vendor_snap_file:s0"
     if [ -d "$WORK_DIR/vendor/saiv/image_understanding/db/aig_classifier" ]; then
         DELETE_FROM_WORK_DIR "vendor" "saiv/image_understanding/db/aig_classifier"
     fi
     ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "vendor" "saiv/image_understanding/db/aig_classifier" 0 2000 755 "u:object_r:vendor_snap_file:s0"
+    if [ -d "$WORK_DIR/system/system/saiv/image_understanding/db/aig" ]; then
+        DELETE_FROM_WORK_DIR "system" "system/saiv/image_understanding/db/aig"
+    fi
     ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "system" "system/saiv/image_understanding/db/aig" 0 0 755 "u:object_r:system_file:s0"
+    LOG_STEP_OUT
+fi
+if [[ "$(GET_FLOATING_FEATURE_CONFIG "$FW_DIR/$TARGET_FIRMWARE_PATH/system/system/etc/floating_feature.xml" "SEC_FLOATING_FEATURE_GALLERY_CONFIG_PET_CLUSTER_VERSION")" != "V1001" ]] && \
+        [[ "$(GET_FLOATING_FEATURE_CONFIG "SEC_FLOATING_FEATURE_GALLERY_CONFIG_PET_CLUSTER_VERSION")" == "V1001" ]]; then
+    LOG_STEP_IN "- Adding Pet Cluster V1001 blobs"
+    if [ -d "$WORK_DIR/vendor/saiv/image_understanding/db/pet_detector" ]; then
+        DELETE_FROM_WORK_DIR "vendor" "saiv/image_understanding/db/pet_detector"
+    fi
+    ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "vendor" "saiv/image_understanding/db/pet_detector" 0 2000 755 "u:object_r:vendor_snap_file:s0"
+    if [ -d "$WORK_DIR/vendor/saiv/image_understanding/db/pet_mypetsearch" ]; then
+        DELETE_FROM_WORK_DIR "vendor" "saiv/image_understanding/db/pet_mypetsearch"
+    fi
+    ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "vendor" "saiv/image_understanding/db/pet_mypetsearch" 0 2000 755 "u:object_r:vendor_snap_file:s0"
     LOG_STEP_OUT
 fi
 DELETE_FROM_WORK_DIR "system" "system/saiv/textrecognition"
