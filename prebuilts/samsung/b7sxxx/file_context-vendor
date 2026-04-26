@@ -1,0 +1,11 @@
+/vendor u:object_r:vendor_file:s0
+/vendor/etc u:object_r:vendor_configs_file:s0
+/vendor/etc/saiv u:object_r:vendor_configs_file:s0
+/vendor/etc/saiv/image_understanding u:object_r:vendor_configs_file:s0
+/vendor/etc/saiv/image_understanding/db u:object_r:vendor_configs_file:s0
+/vendor/etc/saiv/image_understanding/db/aic_pet_detector u:object_r:vendor_configs_file:s0
+/vendor/etc/saiv/image_understanding/db/aic_pet_detector/aic_pet_detector_cnn\.info u:object_r:vendor_configs_file:s0
+/vendor/etc/saiv/image_understanding/db/aic_pet_detector/aic_pet_detector_cnn\.tflite u:object_r:vendor_configs_file:s0
+/vendor/etc/saiv/image_understanding/db/doc_rectifier u:object_r:vendor_configs_file:s0
+/vendor/etc/saiv/image_understanding/db/doc_rectifier/doc_rectifier_cnn\.info u:object_r:vendor_configs_file:s0
+/vendor/etc/saiv/image_understanding/db/doc_rectifier/doc_rectifier_cnn\.tflite u:object_r:vendor_configs_file:s0

@@ -1,0 +1,8 @@
+{
+	"version_id": "v2",
+	"pcmodel" : "1.9",
+	"model_type" : "npu",
+	"precision" : "float16",
+	"model_path" : "/vendor/etc/saiv/image_understanding/db/doc_rectifier/doc_rectifier_cnn.tflite"
+}
+

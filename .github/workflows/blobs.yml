@@ -56,6 +56,9 @@ jobs:
           - module: "Galaxy S23 FE (r11sxxx)"
             device: "r11sxxx"
             firmware: "SM-S711B/EUX/358615311234564"
+          - module: "Galaxy Z Fip7 (b7sxxx)"
+            device: "b7sxxx"
+            firmware: "SM-F966B/EUX/350117734722596"
 
     steps:
       - name: Checkout repo

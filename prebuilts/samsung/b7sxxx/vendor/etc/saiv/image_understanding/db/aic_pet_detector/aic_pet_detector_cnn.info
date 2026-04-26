@@ -1,0 +1,10 @@
+{
+	"version_id": "V2_MULTI_FRAME",
+	"tag" : "2.12_MULTIFRAME",
+	"model_type" : "npu",
+	"precision" : "qasymm8",
+	"latency" : "0",
+	"compiler" : "7.14.27.21",
+	"model_path" : "/vendor/etc/saiv/image_understanding/db/aic_pet_detector/aic_pet_detector_cnn.tflite",
+	"resolution" : "512"
+}
