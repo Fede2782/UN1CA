@@ -150,6 +150,10 @@ if [ -f "$WORK_DIR/system/system/lib64/libsmart_cropping.camera.samsung.so" ] &&
     ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "system" "system/saiv/smartcropping_2.0/db/smartcrop_saliency_deploy.prototxt" 0 0 644 "u:object_r:system_file:s0"
     ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "system" "system/saiv/smartcropping_2.0/db/smartcrop_saliency_train" 0 0 644 "u:object_r:system_file:s0"
 fi
+if [ -f "$WORK_DIR/system/system/lib64/libImageCropper.camera.samsung.so" ] && \
+        [ ! -d "$WORK_DIR/vendor/saiv/image_understanding/db/sce_detector" ]; then
+    ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "vendor" "saiv/image_understanding/db/sce_detector/sce_detector_cnn.tflite" 0 0 644 "u:object_r:vendor_snap_file:s0"
+fi
 DELETE_FROM_WORK_DIR "system" "system/saiv/textrecognition"
 ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "system" "system/saiv/textrecognition" 0 0 755 "u:object_r:system_file:s0"
 
