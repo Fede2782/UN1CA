@@ -1,8 +1,5 @@
 <?xml version= "1.0" encoding= "UTF-8"?>
 <resources>
-	<!-- Single take Full/Lite version -->
-	<local name="ENABLE_SINGLE_TAKE_LITE" value="true"  />
-
 	<!-- STP -->
 	<local name="PREVIEW_BUFFER_POOL_SIZE" value="10"  />
 	<local name="MASTER_BUFFER_POOL_SIZE" value="2"  />
@@ -25,7 +22,7 @@
 	<!-- STC -->
 	<local name="SUPPORT_SINGLE_BOKEH_PROCESSING" value="false"  />
 	<local name="SUPPORT_BEAUTY_PROCESSING" value="false"  />
-	<local name="SUPPORT_AI_FILTER" value="false"  />
+	<local name="SUPPORT_AI_FILTER" value="true"  />
 	<local name="SUPPORT_SMART_CROP" value="true"  />
 	<local name="SINGLE_TAKE_LITE_USE_CAMERA_FILTERS" value="true"  />
 	<local name="HIDT_VIDEO_DURATION" value="6"  />
