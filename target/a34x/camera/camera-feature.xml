@@ -169,8 +169,9 @@
     <local name="SINGLE_TAKE_CAPTURE_INTERVAL" value="1000"/>
     <local name="SINGLE_TAKE_FRONT_CAMERA_DYNAMIC_FOV" value="false"/>
     <local name="SINGLE_TAKE_PHOTO_LOW_PERFORMANCE" value="true" />
-    <local name="SUPPORT_SINGLE_TAKE_COLLAGES" value="false" />
+    <local name="SUPPORT_SINGLE_TAKE_COLLAGES" value="true" />
 	<local name="SUPPORT_SINGLE_TAKE_MULTI_CAMERA" value="false" />
+    <local name="SUPPORT_SINGLE_TAKE_HIGHLIGHT_VIDEOS" value="true" />
 
     <!-- Etc. features -->
     <local name="SUPPORT_PRO_AE_PRIORITY_MODE" value="true" />
