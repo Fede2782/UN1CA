@@ -136,6 +136,17 @@ if [[ -f "$WORK_DIR/system/system/lib64/libSmartScan.camera.samsung.so" ]]; then
     fi
 fi
 
+# SEC_PRODUCT_FEATURE_CAMERA_CONFIG_ACTION_CLASSIFIER
+if [[ -f "$WORK_DIR/system/system/lib64/libVideoClassifier.camera.samsung.so" ]]; then
+    if [[ ! -d "$WORK_DIR/vendor/etc/singletake/dynamic_viewing" ]] || \
+            [[ "$TARGET_PLATFORM_SDK_VERSION" -lt "$SOURCE_PLATFORM_SDK_VERSION" ]]; then
+        if [[ -d "$WORK_DIR/vendor/etc/singletake/dynamic_viewing" ]]; then
+            DELETE_FROM_WORK_DIR "vendor" "etc/singletake/dynamic_viewing"
+        fi
+        ADD_TO_WORK_DIR "$SOURCE_FIRMWARE" "vendor" "etc/singletake/dynamic_viewing" 0 2000 755 "u:object_r:vendor_configs_file:s0"
+    fi
+fi
+
 # SEC_PRODUCT_FEATURE_CAMERA_CONFIG_STRIDE_OCR_VERSION
 if [[ -d "$WORK_DIR/system/system/saiv/textrecognition" ]]; then
     DELETE_FROM_WORK_DIR "system" "system/saiv/textrecognition"
