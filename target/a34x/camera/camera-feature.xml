@@ -172,6 +172,7 @@
     <local name="SUPPORT_SINGLE_TAKE_COLLAGES" value="true" />
 	<local name="SUPPORT_SINGLE_TAKE_MULTI_CAMERA" value="false" />
     <local name="SUPPORT_SINGLE_TAKE_HIGHLIGHT_VIDEOS" value="true" />
+    <local name="SUPPORT_SINGLE_TAKE_EXTENDED_CAPTURE" value="true" />
 
     <!-- Etc. features -->
     <local name="SUPPORT_PRO_AE_PRIORITY_MODE" value="true" />
