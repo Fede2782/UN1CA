@@ -1,13 +1,19 @@
 A346B_FIRMWARE_URL="https://github.com/UN1CA/proprietary_vendor_samsung_a34x/releases/download/EYI7-firmware/A346BXXUBEYI7_mtk_fw.tar.md5"
+A3460_FIRMWARE_URL="https://github.com/UN1CA/proprietary_vendor_samsung_a34x/releases/download/EYI7-firmware/A3460ZHUAEYI7_mtk_fw.tar.md5"
+A346E_FIRMWARE_URL="https://github.com/UN1CA/proprietary_vendor_samsung_a34x/releases/download/EYI7-firmware/A346EXXUAEYI7_mtk_fw.tar.md5"
+A346M_FIRMWARE_URL="https://github.com/UN1CA/proprietary_vendor_samsung_a34x/releases/download/EYI7-firmware/A346MUBUBEYI7_mtk_fw.tar.md5"
 
 A346B_VBMETA_URL="https://github.com/UN1CA/proprietary_vendor_samsung_a34x/releases/download/patched-vbmeta/A346BXXUBEYI7_patched_vbmeta.tar.md5"
+A3460_VBMETA_URL="https://github.com/UN1CA/proprietary_vendor_samsung_a34x/releases/download/patched-vbmeta/A3460ZHUAEYI7_patched_vbmeta.tar.md5"
+A346E_VBMETA_URL="https://github.com/UN1CA/proprietary_vendor_samsung_a34x/releases/download/patched-vbmeta/A346EXXUAEYI7_patched_vbmeta.tar.md5"
+A346M_VBMETA_URL="https://github.com/UN1CA/proprietary_vendor_samsung_a34x/releases/download/patched-vbmeta/A346MUBUBEYI7_patched_vbmeta.tar.md5"
 
 if [ -d "$TMP_DIR/firmware" ]; then
    EVAL "rm -rf \"$TMP_DIR/firmware\""
 fi
 EVAL "mkdir -p \"$TMP_DIR/firmware\""
 
-for f in A346B; do
+for f in A346B A346E A346M A3460; do
     LOG "- Downloading firmware package for $f"
 
     var="${f}_FIRMWARE_URL"
