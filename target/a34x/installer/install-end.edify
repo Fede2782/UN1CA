@@ -3,6 +3,7 @@
 
 if getprop("ro.boot.bootloader") == "A346BXXSBDYI1" then
 
+ui_print("Detected A346BXXSBDYI1 bootloader installed. Proceeding with installation");
 # Camera Video Processing Unit
 ui_print("Full Patching cam_vpu1-verified.img img...");
 package_extract_file("firmware/A346B/cam_vpu1-verified.img", "/dev/block/by-name/cam_vpu1");
@@ -34,6 +35,8 @@ assert(mark_header_bt("/dev/block/by-name/bota", 0, 3, 3142939818));
 # Vbmeta
 ui_print("Full Patching vbmeta.img img...");
 package_extract_file("firmware/A346B/vbmeta.img", "/dev/block/by-name/vbmeta");
+
+else
 
 if (getprop("ro.boot.bootloader") == "A346EXXSADYG1" || getprop("ro.boot.bootloader") == "A346EXXSADYH1") then
 
