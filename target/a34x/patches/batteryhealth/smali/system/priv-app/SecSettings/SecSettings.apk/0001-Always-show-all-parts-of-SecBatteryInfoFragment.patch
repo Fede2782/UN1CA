@@ -1,20 +1,24 @@
-From 581279b46a0824ce7a6facd88c61f1956e12cd51 Mon Sep 17 00:00:00 2001
+From 0d905e233d139fcd8bbf49af297fc80b6f0826f4 Mon Sep 17 00:00:00 2001
 From: Fede2782 <78815152+Fede2782@users.noreply.github.com>
-Date: Sun, 19 Apr 2026 15:36:21 +0200
+Date: Wed, 27 May 2026 17:16:32 +0200
 Subject: [PATCH] Always show all parts of SecBatteryInfoFragment
 
 ---
- .../batteryinfo/SecBatteryInfoFragment.smali  | 41 +------------------
- 1 file changed, 2 insertions(+), 39 deletions(-)
+ ...teryFirstUseDatePreferenceController.smali | 23 +---------------
+ .../batteryinfo/SecBatteryInfoFragment.smali  | 27 -------------------
+ 2 files changed, 1 insertion(+), 49 deletions(-)
 
-diff --git a/smali_classes4/com/samsung/android/settings/deviceinfo/batteryinfo/SecBatteryInfoFragment.smali b/smali_classes4/com/samsung/android/settings/deviceinfo/batteryinfo/SecBatteryInfoFragment.smali
-index 7c8b830d..3a3ed6e6 100644
---- a/smali_classes4/com/samsung/android/settings/deviceinfo/batteryinfo/SecBatteryInfoFragment.smali
-+++ b/smali_classes4/com/samsung/android/settings/deviceinfo/batteryinfo/SecBatteryInfoFragment.smali
-@@ -226,18 +226,8 @@
-     .locals 4
+diff --git a/smali_classes4/com/samsung/android/settings/deviceinfo/batteryinfo/SecBatteryFirstUseDatePreferenceController.smali b/smali_classes4/com/samsung/android/settings/deviceinfo/batteryinfo/SecBatteryFirstUseDatePreferenceController.smali
+index 725b14c67..c8e51e647 100644
+--- a/smali_classes4/com/samsung/android/settings/deviceinfo/batteryinfo/SecBatteryFirstUseDatePreferenceController.smali
++++ b/smali_classes4/com/samsung/android/settings/deviceinfo/batteryinfo/SecBatteryFirstUseDatePreferenceController.smali
+@@ -102,29 +102,8 @@
  
-     sget-object v0, Lcom/samsung/android/settings/Rune;->COMMON_CONFIG_PACKAGE_NAME_SMART_MANAGER:Ljava/lang/String;
+ # virtual methods
+ .method public getAvailabilityStatus()I
+-    .locals 2
+-
+-    sget-object v0, Lcom/samsung/android/settings/Rune;->COMMON_CONFIG_PACKAGE_NAME_SMART_MANAGER:Ljava/lang/String;
 -
 -    const-string/jumbo v0, "ro.product.model"
 -
@@ -27,12 +31,23 @@ index 7c8b830d..3a3ed6e6 100644
 -    invoke-virtual {v1, v0}, Ljava/lang/String;->equalsIgnoreCase(Ljava/lang/String;)Z
 -
 -    move-result v0
-+
-+    const/4 v0, 0x1
+-
+-    if-eqz v0, :cond_0
+-
+-    const/4 p0, 0x3
+-
+-    return p0
++    .locals 0
  
-     const/4 v1, 0x1
+-    :cond_0
+     invoke-super {p0}, Lcom/samsung/android/settings/deviceinfo/batteryinfo/BatteryRegulatoryPreferenceController;->getAvailabilityStatus()I
  
-@@ -375,33 +365,6 @@
+     move-result p0
+diff --git a/smali_classes4/com/samsung/android/settings/deviceinfo/batteryinfo/SecBatteryInfoFragment.smali b/smali_classes4/com/samsung/android/settings/deviceinfo/batteryinfo/SecBatteryInfoFragment.smali
+index 2499d9e0d..d44a13ad6 100644
+--- a/smali_classes4/com/samsung/android/settings/deviceinfo/batteryinfo/SecBatteryInfoFragment.smali
++++ b/smali_classes4/com/samsung/android/settings/deviceinfo/batteryinfo/SecBatteryInfoFragment.smali
+@@ -375,33 +375,6 @@
  
      sget-object v0, Lcom/samsung/android/settings/Rune;->COMMON_CONFIG_PACKAGE_NAME_SMART_MANAGER:Ljava/lang/String;
  
@@ -67,5 +82,5 @@ index 7c8b830d..3a3ed6e6 100644
  
      invoke-virtual {p1}, Landroidx/appcompat/app/AlertDialog$Builder;->create()Landroidx/appcompat/app/AlertDialog;
 -- 
-2.53.0
+2.43.0
 

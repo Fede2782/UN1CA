@@ -5,16 +5,24 @@
 # 0x0 = SUPPORTED
 # 0x3 = UNSUPPORTED ON DEVICE
 
-# Always enable BatteryRegulatoryPreferenceController
+# Always enable BatteryRegulatoryPreferenceController on SM-A346B
 # Normally this checks for auth support or if target is SM-A236B
 SMALI_PATCH "system" "system/priv-app/SecSettings/SecSettings.apk" \
-    "smali_classes4/com/samsung/android/settings/deviceinfo/batteryinfo/BatteryRegulatoryPreferenceController.smali" "return" \
+    "smali_classes4/com/samsung/android/settings/deviceinfo/batteryinfo/BatteryRegulatoryPreferenceController.smali" "replace" \
      "getAvailabilityStatus()I" \
-     "0x0"
+     "SM-A236B" "SM-A346B"
 
-# Always enable SecBatteryFirstUseDataPreferenceController
-# Normally this checks if target is NOT SM-A236B and for auth support
 SMALI_PATCH "system" "system/priv-app/SecSettings/SecSettings.apk" \
-    "smali_classes4/com/samsung/android/settings/deviceinfo/batteryinfo/SecBatteryFirstUseDatePreferenceController.smali" "return" \
+    "smali_classes4/com/samsung/android/settings/deviceinfo/batteryinfo/BatteryRegulatoryPreferenceController.smali" "replace" \
      "getAvailabilityStatus()I" \
-     "0x0"
+     "ro.product.model" "ro.boot.em.model"
+
+SMALI_PATCH "system" "system/priv-app/SecSettings/SecSettings.apk" \
+    "smali_classes4/com/samsung/android/settings/deviceinfo/batteryinfo/SecBatteryInfoFragment.smali" "replace" \
+    "onCreateOptionsMenu(Landroid/view/Menu;Landroid/view/MenuInflater;)V" \
+    "ro.product.model" "ro.boot.em.model"
+
+SMALI_PATCH "system" "system/priv-app/SecSettings/SecSettings.apk" \
+    "smali_classes4/com/samsung/android/settings/deviceinfo/batteryinfo/SecBatteryInfoFragment.smali" "replace" \
+    "onCreateOptionsMenu(Landroid/view/Menu;Landroid/view/MenuInflater;)V" \
+    "SM-A236B" "SM-A346B"
