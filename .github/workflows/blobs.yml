@@ -35,6 +35,9 @@ jobs:
           - module: "Galaxy Z Flip4 (b4qxxx)"
             device: "b4qxxx"
             firmware: "SM-F721B/BTE/350525851234569"
+          - module: "Galaxy S23 (dm1qxxx)"
+            device: "dm1qxxx"
+            firmware: "SM-S911B/EUX/352404911234563"
           - module: "Galaxy Tab A9+ 5G (gta9pxxx)"
             device: "gta9pxxx"
             firmware: "SM-X216B/EUX/352862571234563"
@@ -47,6 +50,9 @@ jobs:
           - module: "Galaxy S21 FE 5G (Exynos) (r9sxxx)"
             device: "r9sxxx"
             firmware: "SM-G990E/THL/355798871234563"
+          - module: "Galaxy S23 FE (r11sxxx)"
+            device: "r11sxxx"
+            firmware: "SM-S711B/EUX/358615311234564"
 
     steps:
       - name: Checkout repo
