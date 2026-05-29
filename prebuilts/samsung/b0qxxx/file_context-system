@@ -77,8 +77,6 @@
 /system/priv-app/SmartEye u:object_r:system_file:s0
 /system/priv-app/SmartEye/SmartEye\.apk u:object_r:system_file:s0
 /system/system_ext u:object_r:system_file:s0
-/system/system_ext/apex u:object_r:system_file:s0
-/system/system_ext/apex/com\.android\.vndk\.v31\.apex u:object_r:system_file:s0
 /system/system_ext/etc u:object_r:system_file:s0
 /system/system_ext/etc/build_flags\.json u:object_r:system_file:s0
 /system/system_ext/etc/NOTICE\.xml\.gz u:object_r:system_file:s0

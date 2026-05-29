@@ -3,3 +3,6 @@ system/lib 0 0 755 capabilities=0x0
 system/lib/libnfc_sec_jni.so 0 0 644 capabilities=0x0
 system/lib64 0 0 755 capabilities=0x0
 system/lib64/libnfc_sec_jni.so 0 0 644 capabilities=0x0
+system/system_ext 0 0 755 capabilities=0x0
+system/system_ext/apex 0 0 755 capabilities=0x0
+system/system_ext/apex/com.android.vndk.v31.apex 0 0 644 capabilities=0x0
