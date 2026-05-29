@@ -5,6 +5,7 @@ on:
   pull_request:
   push:
     branches:
+      - 'sixteen-qpr2'
       - 'sixteen'
 
 concurrency:
