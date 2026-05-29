@@ -151,8 +151,6 @@ SYSTEM_DEBLOAT+="
 system/priv-app/YourPhone_P1_5
 "
 
-ADD_TO_WORK_DIR "gta9pxxx" "system" "system/priv-app/YourPhone_Stub/YourPhone_Stub.apk" 0 0 644 "u:object_r:system_file:s0"
-
 # Live Transcribe
 SYSTEM_DEBLOAT+="
 system/app/LiveTranscribe
