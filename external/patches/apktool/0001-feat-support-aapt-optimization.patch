@@ -1,19 +1,19 @@
-From 413662894fcc7742e04c4f01345d6b2fc06992d0 Mon Sep 17 00:00:00 2001
+From 35c66bdddae14da239c3c7c9759f786ff53cd7d9 Mon Sep 17 00:00:00 2001
 From: Kofua <1638183271zjn@gmail.com>
-Date: Sat, 30 Mar 2024 22:18:41 +0800
+Date: Mon, 26 Oct 2026 18:23:53 +0100
 Subject: [PATCH] feat: support aapt optimization
 
 ---
- .../src/main/java/brut/apktool/Main.java      | 27 ++++++++++++
- .../src/main/java/brut/androlib/Config.java   | 37 ++++++++++++++++
- .../java/brut/androlib/res/AaptInvoker.java   | 43 +++++++++++++++++++
- 3 files changed, 107 insertions(+)
+ .../src/main/java/brut/apktool/Main.java      | 27 +++++++++++++
+ .../src/main/java/brut/androlib/Config.java   | 37 +++++++++++++++++
+ .../java/brut/androlib/res/AaptInvoker.java   | 40 +++++++++++++++++++
+ 3 files changed, 104 insertions(+)
 
 diff --git a/brut.apktool/apktool-cli/src/main/java/brut/apktool/Main.java b/brut.apktool/apktool-cli/src/main/java/brut/apktool/Main.java
-index f59c5ea6..c1b16a33 100644
+index 0d9ed6a9..4a41a5c6 100644
 --- a/brut.apktool/apktool-cli/src/main/java/brut/apktool/Main.java
 +++ b/brut.apktool/apktool-cli/src/main/java/brut/apktool/Main.java
-@@ -162,6 +162,21 @@ public class Main {
+@@ -166,6 +166,21 @@ public class Main {
          .desc("Disable repacking of the built files into a new apk.")
          .get();
  
@@ -35,7 +35,7 @@ index f59c5ea6..c1b16a33 100644
      private static final Option buildNoCrunchOption = Option.builder()
          .longOpt("no-crunch")
          .desc("Disable crunching of resource files during the build step.")
-@@ -268,6 +283,9 @@ public class Main {
+@@ -278,6 +293,9 @@ public class Main {
                  buildOptions.addOption(buildDebuggableOption);
                  buildOptions.addOption(buildNetSecConfOption);
                  buildOptions.addOption(buildNoApkOption);
@@ -45,7 +45,7 @@ index f59c5ea6..c1b16a33 100644
                  buildOptions.addOption(buildNoCrunchOption);
              }
          }
-@@ -553,6 +571,15 @@ public class Main {
+@@ -567,6 +585,15 @@ public class Main {
          if (cli.hasOption(buildNoApkOption)) {
              config.setNoApk(true);
          }
@@ -62,10 +62,10 @@ index f59c5ea6..c1b16a33 100644
              config.setNoCrunch(true);
          }
 diff --git a/brut.apktool/apktool-lib/src/main/java/brut/androlib/Config.java b/brut.apktool/apktool-lib/src/main/java/brut/androlib/Config.java
-index d67f0ece..62d1dc07 100644
+index 4b36f2c8..c939a62e 100644
 --- a/brut.apktool/apktool-lib/src/main/java/brut/androlib/Config.java
 +++ b/brut.apktool/apktool-lib/src/main/java/brut/androlib/Config.java
-@@ -50,6 +50,12 @@ public class Config {
+@@ -53,6 +53,12 @@ public class Config {
      private boolean mNetSecConf;
      private String mAaptBinary;
  
@@ -78,7 +78,7 @@ index d67f0ece..62d1dc07 100644
      public Config(String version) {
          mVersion = version;
  
-@@ -78,6 +84,10 @@ public class Config {
+@@ -81,6 +87,10 @@ public class Config {
          mDebuggable = false;
          mNetSecConf = false;
          mAaptBinary = null;
@@ -89,7 +89,7 @@ index d67f0ece..62d1dc07 100644
      }
  
      public String getVersion() {
-@@ -269,4 +279,31 @@ public class Config {
+@@ -268,4 +278,31 @@ public class Config {
      public void setAaptBinary(String aaptBinary) {
          mAaptBinary = aaptBinary;
      }
@@ -122,22 +122,19 @@ index d67f0ece..62d1dc07 100644
 +    }
  }
 diff --git a/brut.apktool/apktool-lib/src/main/java/brut/androlib/res/AaptInvoker.java b/brut.apktool/apktool-lib/src/main/java/brut/androlib/res/AaptInvoker.java
-index 67696402..78e554c9 100644
+index bb7b760f..45cfba62 100644
 --- a/brut.apktool/apktool-lib/src/main/java/brut/androlib/res/AaptInvoker.java
 +++ b/brut.apktool/apktool-lib/src/main/java/brut/androlib/res/AaptInvoker.java
-@@ -25,6 +25,10 @@ import brut.common.Log;
- import brut.util.OS;
+@@ -26,6 +26,7 @@ import brut.androlib.res.table.ResTable;
+ import brut.common.Log;
+ import brut.util.SystemUtils;
  
- import java.io.File;
-+import java.io.IOException;
-+import java.nio.file.Files;
-+import java.nio.file.Path;
 +import java.nio.file.StandardCopyOption;
- import java.util.ArrayList;
- import java.util.List;
- import java.util.Map;
-@@ -184,6 +188,45 @@ public class AaptInvoker {
-         } catch (BrutException ex) {
+ import java.io.IOException;
+ import java.nio.file.Files;
+ import java.nio.file.Path;
+@@ -187,6 +188,45 @@ public class AaptInvoker {
+         } catch (IOException | InterruptedException ex) {
              throw new AndrolibException(ex);
          }
 +
@@ -181,7 +178,7 @@ index 67696402..78e554c9 100644
 +        }
      }
  
-     private List<File> getIncludeFiles() throws AndrolibException {
+     private List<Path> getIncludeFiles() throws AndrolibException {
 -- 
-2.53.0
+2.43.0
 
